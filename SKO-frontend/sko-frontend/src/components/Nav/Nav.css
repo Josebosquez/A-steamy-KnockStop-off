@@ -1,0 +1,32 @@
+    .Navbar {
+        width: 100%;
+        height: 75px;
+        background-color: #4e5052;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .h1-logo {
+        color: white;
+    }
+    
+    div ul li a {
+        text-decoration: none;
+    }
+    
+    div ul li {
+        display: inline-block;
+        width: 100px;
+        justify-content: right;
+        text-decoration: none;
+    }
+    
+    .selected {
+        border-bottom: 1px solid white;
+    }
+    
+    .nav-right-side ul li:not(:last-child) {
+        margin-right: 15px;
+    }

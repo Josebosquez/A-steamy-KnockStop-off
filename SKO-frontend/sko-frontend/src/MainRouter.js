@@ -9,8 +9,16 @@ function MainRouter(props) {
     return (
         <Router>
             <Nav />
-            <Signup></Signup>
-            <Login></Login>
+            <>
+                <Route exact path="/sign-up" component={Signup} />
+                <Route
+                    exact
+                    path="/login"
+                    render={(routerProps) => (
+                        <Login {...routerProps} handleUserLogin={props.handleUserLogin} />
+                    )}
+                />
+            </>
         </Router>
     )
 }
