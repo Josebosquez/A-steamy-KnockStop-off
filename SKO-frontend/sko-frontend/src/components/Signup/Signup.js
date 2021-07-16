@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import {isAlpha, isEmail, isAlphanumeric, isStrongPassword} from "validator"
 
-
 export class Signup extends Component {
     state ={
         firstName: "",
@@ -20,7 +19,6 @@ export class Signup extends Component {
         
     }
 
-
     render() {
         const {
             firstName,
@@ -35,6 +33,23 @@ export class Signup extends Component {
             <div className='container'>
                 <div className='title'>Sign up</div>
                 
+                <div>
+                    <form className='form' onSubmit={this.handleOnSubmit}>
+                        <div>
+                            <label>First Name</label>
+                            <input
+                            value={firstName}
+                            placeholder="First Name"
+                            name='firstName'
+                            onChange={this.handleOnChange}
+                            autoFocus
+                            />
+                        </div>
+                    </form>
+                </div>
+
+
+
             </div>
         )
     }
