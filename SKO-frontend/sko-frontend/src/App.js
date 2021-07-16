@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
+import MainRouter from "./MainRouter";
 
 export class App extends Component {
+state={
+  user: null
+}
+
   render() {
     return (
-      <div>
-        Hello
-      </div>
+      <>
+
+        <MainRouter user={this.state.user}/>
+      
+      </>
+
     )
   }
 }
