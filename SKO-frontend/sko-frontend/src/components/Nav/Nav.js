@@ -17,7 +17,11 @@ export class nav extends Component {
                             Cart
                         </li>
                         <li>
-                            Account
+                            {this.props.user ? (
+                                <NavLink activeClassName="selected" to='/logout' onClick={this.props.handleUserLogout}>Logout </NavLink>
+                            ) : (
+                                <NavLink activeClassName="selected" to='/sign-up'>Sign Up </NavLink>)
+                            }
                         </li>
                         <li>
                             {this.props.user ? (
