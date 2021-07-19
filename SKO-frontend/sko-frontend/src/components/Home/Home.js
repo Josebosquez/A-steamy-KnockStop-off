@@ -1,9 +1,45 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
+// import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
 import "./Home.css"
+import axios from "axios"
+// import { data } from 'browserslist';
 
 export class Home extends Component {
+    state = {
+        searchBar: '',
+        searchedGameArray: [],
+    }
+
+    //write logic for axios call here.
+    handleOnEnter = async (event) => {
+        event.preventDefault()
+
+        try {
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}`)
+
+            console.log(searchedGame.data.results)
+
+            this.setState({
+                searchedGameArray: searchedGame.data.results
+            })
+
+            console.log(this.state);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    handleOnChange = (event) => {
+        this.setState({
+            searchBar: event.target.value
+        })
+    }
+
     render() {
+
+        const { searchedGameArray } = this.state
         return (
             <div>
 
@@ -13,16 +49,27 @@ export class Home extends Component {
                         <div className='input'>
                             <form className='input'>
                                 <input
+                                    onChange={this.handleOnChange}
                                     placeholder='Search bar'
                                 />
-                                <button>Enter</button>
+                                <button onClick={this.handleOnEnter}>Enter</button>
                             </form>
 
-                        </div>
+                                </div>
+                            <div className='searchedGameResults'>
+                                {this.state.searchedGameArray.map((item,i) => {
+                                    if (i < 20 ){
+                                        return <div className='searchResults'> <img className='img' src = {item.background_image}/> 
+                                        <p className='searchResultsText'>{item.name}</p>
+                                        </div>
+                                    }
+                                })}
+                            </div>
                         <div className='trending'>
                             Trending
                         </div>
                     </div>
+
                     <div className='platforms'>
                         <ul>
                             <li>
@@ -31,7 +78,7 @@ export class Home extends Component {
                             <li>
                                 PC
                             </li>
-                            {/* <li>
+                            <li>
                                 PS5
                             </li>
                             <li>
@@ -42,8 +89,26 @@ export class Home extends Component {
                             </li>
                             <li>
                                 XBox 1
-                            </li> */}
+                            </li>
                         </ul>
+                    </div>
+
+                    <div className='allPlatforms'>
+                        Click here for additional platforms
+                    </div>
+
+                    <div className='row'>
+                        <p className='filteredTitle'>Filtered by Genre</p>
+                        <div>
+                            First row goes here, will have smaller li's that go throughout
+                        </div>
+                    </div>
+                    
+                    <div className='row'>
+                        <p className='filteredTitle'>Filtered by Genre</p>
+                        <div>
+                            Second row goes here, will have smaller li's that go throughout
+                        </div>
                     </div>
                 </div>
             </div>

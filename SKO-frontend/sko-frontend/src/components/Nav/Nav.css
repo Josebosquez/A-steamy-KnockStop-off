@@ -10,7 +10,9 @@
     }
     
     .h1-logo {
-        color: white;
+        font-size: 40px;
+        text-decoration: none;
+        color: white
     }
     
     div ul li a {
@@ -25,7 +27,6 @@
     }
     
     .selected {
-        text-decoration: none;
         border-bottom: 1px solid white;
         color: red;
     }
