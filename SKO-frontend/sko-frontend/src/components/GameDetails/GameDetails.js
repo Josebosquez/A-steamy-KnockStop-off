@@ -8,9 +8,13 @@ export class GameDetails extends Component {
     };
 
     async componentDidMount() {
+
+
         try {
             console.log(this.props)
-            let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.props}`)
+            let result = await axios.get(`
+            https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
+            console.log(result)
 
         } catch (e) {
             console.log(e)
@@ -21,22 +25,22 @@ export class GameDetails extends Component {
         return (
             <div>
                 <div className='mainPage'>
-                        <div className='trailer-images'>
-                            <div className='trailer'>
-                                trailer
-                            </div>
-                            <div className='images'>
-                                Images
-                            </div>
+                    <div className='trailer-images'>
+                        <div className='trailer'>
+                            trailer
                         </div>
-                        <div className='infoCenter'>
-                            <div className='poster'>
-                                Poster
-                            </div>
-                            <div className='gameInfo'>
-                                Info
-                            </div>
+                        <div className='images'>
+                            Images
                         </div>
+                    </div>
+                    <div className='infoCenter'>
+                        <div className='poster'>
+                            Poster
+                        </div>
+                        <div className='gameInfo'>
+                            Info
+                        </div>
+                    </div>
                 </div>
                 <div className='bottomPage'>
                     <div className='reviews'>

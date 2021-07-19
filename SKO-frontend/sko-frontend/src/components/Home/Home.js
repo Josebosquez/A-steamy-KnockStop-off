@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 // import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
 import "./Home.css"
 import axios from "axios"
@@ -41,7 +41,7 @@ export class Home extends Component {
 
     handleRandomTitle = async () => {
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c&metacritic=95,100`)
 
             console.log(searchedGame.data.results.name)
 
@@ -74,16 +74,21 @@ export class Home extends Component {
                                 <button onClick={this.handleOnEnter}>Enter</button>
                             </form>
 
-                                </div>
-                            <div className='searchedGameResults'>
-                                {this.state.searchedGameArray.map((item,i) => {
-                                    if (i < 20 ){
-                                        return <div className='searchResults'> <img className='img' src = {item.background_image}/> 
-                                        <p className='searchResultsText'>{item.name}</p>
+                        </div>
+                        <div className='searchedGameResults'>
+                            {this.state.searchedGameArray.map((item, i) => {
+                                if (i < 20) {
+                                    return <Link key={i} to={{
+                                        pathname: `/game-detail/${item.id}`
+                                    }}>
+                                        <div className='searchResults'>
+                                            <img className='img' src={item.background_image} />
+                                            <p className='searchResultsText'>{item.name}</p>
                                         </div>
-                                    }
-                                })}
-                            </div>
+                                    </Link>
+                                }
+                            })}
+                        </div>
 
                         <div className='trending'>
                             Trending
@@ -123,7 +128,7 @@ export class Home extends Component {
                             First row goes here, will have smaller li's that go throughout
                         </div>
                     </div>
-                    
+
                     <div className='row'>
                         <p className='filteredTitle'>Filtered by Genre</p>
                         <div>
