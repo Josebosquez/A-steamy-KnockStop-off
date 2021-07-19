@@ -9,6 +9,7 @@ export class Home extends Component {
     state = {
         searchBar: '',
         searchedGameArray: [],
+        randomTitle: []
     }
 
     //write logic for axios call here.
@@ -35,6 +36,24 @@ export class Home extends Component {
         this.setState({
             searchBar: event.target.value
         })
+    }
+
+
+    handleRandomTitle = async () => {
+        try {
+            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c`)
+
+            console.log(searchedGame.data.results.name)
+
+            this.setState({
+                randomTitle: searchedGame.data.results.name
+            })
+
+            console.log(this.state);
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     render() {
@@ -65,6 +84,7 @@ export class Home extends Component {
                                     }
                                 })}
                             </div>
+
                         <div className='trending'>
                             Trending
                         </div>
@@ -98,7 +118,7 @@ export class Home extends Component {
                     </div>
 
                     <div className='row'>
-                        <p className='filteredTitle'>Filtered by Genre</p>
+                        <p className='filteredTitle'>Best Rated Games of All Time!</p>
                         <div>
                             First row goes here, will have smaller li's that go throughout
                         </div>
