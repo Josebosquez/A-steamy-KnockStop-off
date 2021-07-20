@@ -12,7 +12,7 @@ export class GameDetails extends Component {
         playtime: '',
         achievements_count: '',
         released: '',
-        platforms: '',
+        platforms: [],
         website: '',
     };
 
@@ -38,6 +38,7 @@ export class GameDetails extends Component {
                 platforms: result.data.platforms,
                 website: result.data.website,
             })
+            console.log(this.state.platforms)
 
         } catch (e) {
             console.log(e)
@@ -64,11 +65,24 @@ export class GameDetails extends Component {
                         </div>
 
                         <div className='gameInfo'>
-                            Info
+                            <h3>Info </h3>
                             <div>Name: {name}</div>
                             <div>Rating: {rating}</div>
                             <div>Playtime: {playtime}</div>
-                            {/* <div>Platforms: {platforms}</div> */}
+                            <div>
+                                Platforms:{" "}
+                                {this.state.platforms.map((item) => { 
+                                    
+                                    return (
+                                        <span key={item.platform.id}>
+                                            <li>
+                                                {item.platform.name} 
+                                            </li>
+                                        </span>
+                                    );
+                                        
+                                })} 
+                            </div>
                             <div>Achievements count: {achievements_count}</div>
                             <div>Released: {released}</div>
                             <a className = 'purchase' href={website} target='_blank'> Purchase </a>
