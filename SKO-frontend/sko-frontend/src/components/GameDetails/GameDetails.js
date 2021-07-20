@@ -13,7 +13,8 @@ export class GameDetails extends Component {
         achievements_count: '',
         released: '',
         platforms: [],
-        website: '',
+        stores: [],
+        domain: "",
     };
 
     async componentDidMount() {
@@ -36,9 +37,11 @@ export class GameDetails extends Component {
                 achievements_count: result.data.achievements_count,
                 released: result.data.released,
                 platforms: result.data.platforms,
-                website: result.data.website,
+                stores: result.data.stores,
+                // domain: result.data.stores.store.domain
             })
             console.log(this.state.platforms)
+            console.log(result.data.stores)
 
         } catch (e) {
             console.log(e)
@@ -46,7 +49,7 @@ export class GameDetails extends Component {
     }
 
     render() {
-        const { description, background_image, name, movie_count, rating, playtime, achievements_count, released, platforms, website } = this.state
+        const { description, background_image, name, movie_count, rating, playtime, achievements_count, released } = this.state
         return (
             <div>
                 <div className='mainPage'>
@@ -61,15 +64,15 @@ export class GameDetails extends Component {
                     <div className='infoCenter'>
 
                         <div className='poster' >
-                            <img className='poster' src={background_image} />
+                            <img className='poster' src={background_image} alt={background_image} />
                         </div>
 
                         <div className='gameInfo'>
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> Info </div>
-                            <div>Name: {name}</div>
-                            <div>Rating: {rating}</div>
-                            <div>Playtime: {playtime}</div>
-                            <div>
+                            <p>Name: {name}</p>
+                            <p>Rating: {rating}</p>
+                            <p>Playtime: {playtime}</p>
+                            <div className='platform'>
                                 Platforms:{" "}
                                 <div className='platformSize'>
                                     {this.state.platforms.map((item) => {
@@ -83,9 +86,22 @@ export class GameDetails extends Component {
                                     })}
                                 </div>
                             </div>
-                            <div>Achievements count: {achievements_count}</div>
-                            <div>Released: {released}</div>
-                            <a className='purchase' href={website} target='_blank'> Purchase </a>
+                            <p>Achievements count: {achievements_count}</p>
+                            <p>Released: {released}</p>
+                            <div className='store'>
+                                Stores:{" "}
+                                <div className='storeSize'>
+                                    {this.state.stores.map((item) => {
+                                        return (
+                                            <span key={item.store.id}>
+                                                <a href={item.store.domain} target='_blank' rel="noreferrer">
+                                                    {item.store.name}
+                                                </a>
+                                            </span>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                         </div>
 
                     </div>
