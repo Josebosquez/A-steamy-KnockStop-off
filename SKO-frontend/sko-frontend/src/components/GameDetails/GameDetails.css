@@ -1,7 +1,7 @@
-/* * {
+* {
     margin: center;
     outline: solid white 1px;
-} */
+}
 
 .mainPage {
     height: 600px;
@@ -54,11 +54,33 @@
 
 .bottomPage {
     height: 400px;
-    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-content: center;
     align-items: center;
 }
 
+.description {
+    margin-top: 0px;
+    width: 800px;
+    height: auto;
+    font-size: 17px
+}
+
 .reviews {
+    margin-top: 25px;
     width: 400px;
+}
+
+.purchase {
+    margin-top: 50px;
+    border: 1px solid black;
+    background-color: white;
+    width: 70px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }

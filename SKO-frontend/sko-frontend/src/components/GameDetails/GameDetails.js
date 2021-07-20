@@ -71,7 +71,7 @@ export class GameDetails extends Component {
                             {/* <div>Platforms: {platforms}</div> */}
                             <div>Achievements count: {achievements_count}</div>
                             <div>Released: {released}</div>
-                            <a href={website} target='_blank'> Click me for website information </a>
+                            <a className = 'purchase' href={website} target='_blank'> Purchase </a>
                         </div>
 
                     </div>
