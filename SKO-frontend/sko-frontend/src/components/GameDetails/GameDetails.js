@@ -25,7 +25,7 @@ export class GameDetails extends Component {
             https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
             console.log(result)
 
-                // console.log(result.data.description)
+            // console.log(result.data.description)
             this.setState({
                 description: result.data.description_raw,
                 background_image: result.data.background_image,
@@ -46,7 +46,7 @@ export class GameDetails extends Component {
     }
 
     render() {
-        const {description, background_image, name, movie_count,rating, playtime, achievements_count, released, platforms, website}=this.state
+        const { description, background_image, name, movie_count, rating, playtime, achievements_count, released, platforms, website } = this.state
         return (
             <div>
                 <div className='mainPage'>
@@ -59,33 +59,33 @@ export class GameDetails extends Component {
                         </div>
                     </div>
                     <div className='infoCenter'>
-                        
+
                         <div className='poster' >
-                            <img className= 'poster' src = {background_image}/>
+                            <img className='poster' src={background_image} />
                         </div>
 
                         <div className='gameInfo'>
-                            <h3>Info </h3>
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> Info </div>
                             <div>Name: {name}</div>
                             <div>Rating: {rating}</div>
                             <div>Playtime: {playtime}</div>
                             <div>
                                 Platforms:{" "}
-                                {this.state.platforms.map((item) => { 
-                                    
-                                    return (
-                                        <span key={item.platform.id}>
-                                            <li>
-                                                {item.platform.name} 
-                                            </li>
-                                        </span>
-                                    );
-                                        
-                                })} 
+                                <div className='platformSize'>
+                                    {this.state.platforms.map((item) => {
+                                        return (
+                                            <span key={item.platform.id}>
+                                                <li>
+                                                    {item.platform.name}
+                                                </li>
+                                            </span>
+                                        );
+                                    })}
+                                </div>
                             </div>
                             <div>Achievements count: {achievements_count}</div>
                             <div>Released: {released}</div>
-                            <a className = 'purchase' href={website} target='_blank'> Purchase </a>
+                            <a className='purchase' href={website} target='_blank'> Purchase </a>
                         </div>
 
                     </div>
@@ -99,7 +99,7 @@ export class GameDetails extends Component {
 
                     <div className='reviews'>
                         Reviews
-                        
+
                     </div>
 
                     <div>
