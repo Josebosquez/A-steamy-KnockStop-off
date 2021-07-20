@@ -4,7 +4,9 @@ import "./GameDetails.css"
 
 export class GameDetails extends Component {
     state = {
-        name: ''
+        name: '',
+        background_image: '',
+        description: '',
     };
 
     async componentDidMount() {
@@ -16,12 +18,19 @@ export class GameDetails extends Component {
             https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
             console.log(result)
 
+                console.log(result.data.description)
+            this.setState({
+                description: result.data.description_raw,
+                background_image: result.data.background_image,
+            })
+
         } catch (e) {
             console.log(e)
         }
     }
 
     render() {
+        const {description, background_image}=this.state
         return (
             <div>
                 <div className='mainPage'>
@@ -34,18 +43,28 @@ export class GameDetails extends Component {
                         </div>
                     </div>
                     <div className='infoCenter'>
-                        <div className='poster'>
-                            Poster
+                        
+                        <div className='poster' >
+                            <img className= 'poster' src = {background_image}/>
                         </div>
+
                         <div className='gameInfo'>
                             Info
                         </div>
+
                     </div>
                 </div>
+
                 <div className='bottomPage'>
+
+                    <div className="description">
+                        {description}
+                    </div>
+
                     <div className='reviews'>
                         Reviews
                     </div>
+
                     <div>
                         another one
                     </div>
