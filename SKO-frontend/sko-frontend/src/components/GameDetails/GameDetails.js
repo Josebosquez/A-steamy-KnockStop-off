@@ -9,6 +9,11 @@ export class GameDetails extends Component {
         description: '',
         movie_count: '',
         rating: '',
+        playtime: '',
+        achievements_count: '',
+        released: '',
+        platforms: '',
+        website: '',
     };
 
     async componentDidMount() {
@@ -27,6 +32,11 @@ export class GameDetails extends Component {
                 movie_count: result.data.movie_count,
                 rating: result.data.rating,
                 name: result.data.name,
+                playtime: result.data.playtime,
+                achievements_count: result.data.achievements_count,
+                released: result.data.released,
+                platforms: result.data.platforms,
+                website: result.data.website,
             })
 
         } catch (e) {
@@ -35,7 +45,7 @@ export class GameDetails extends Component {
     }
 
     render() {
-        const {description, background_image, name, movie_count,rating}=this.state
+        const {description, background_image, name, movie_count,rating, playtime, achievements_count, released, platforms, website}=this.state
         return (
             <div>
                 <div className='mainPage'>
@@ -57,6 +67,11 @@ export class GameDetails extends Component {
                             Info
                             <div>Name: {name}</div>
                             <div>Rating: {rating}</div>
+                            <div>Playtime: {playtime}</div>
+                            {/* <div>Platforms: {platforms}</div> */}
+                            <div>Achievements count: {achievements_count}</div>
+                            <div>Released: {released}</div>
+                            <a href={website} target='_blank'> Click me for website information </a>
                         </div>
 
                     </div>
