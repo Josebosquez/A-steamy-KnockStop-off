@@ -17,11 +17,20 @@ export class PlatformDetails extends Component {
     async componentDidMount() {
         console.log(this.props)
         try {
-            let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&platforms=${this.state.platform}`)
+            let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&platforms=${this.props.match.params.platform}`)
+
+            let platformName = result.data.results[0].platforms.filter((item)=>{
+                return item.platform.id == this.props.match.params.platform
+            })
+
             this.setState({
-                platform: this.props.match.params.platform
-            });
+                platform: this.props.match.params.platform,
+                platformName: platformName[0].platform.name,
+
+            }) ;
             console.log(result);
+            console.log(this.state.searchedGameArray);
+        
         } catch (e) {
             console.log(e);
         }
@@ -93,14 +102,14 @@ export class PlatformDetails extends Component {
     }
 
     render() {
-        const { searchedGameArray, platform, searchBarErr } = this.state
+        const { searchedGameArray, searchBarErr, platformName} = this.state
         return (
             <div>
 
                 <div className='platformMain'>
                     <div className='platforminput-trending'>
 
-                        <div className='platformName'>The name of the platform {platform}</div>
+                        <div className='platformName'>The name of the platform {platformName}</div>
 
                         <div className='platforminput'>
                             <form className='platforminput'>
