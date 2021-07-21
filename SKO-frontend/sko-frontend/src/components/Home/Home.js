@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-// import { ReactComponent as ArrowIcon } from '../../icons/arrow.svg';
-import "./Home.css"
 import axios from "axios"
-// import { data } from 'browserslist';
+
+import "./Home.css"
 
 export class Home extends Component {
     state = {
         searchBar: '',
         searchedGameArray: [],
-        randomTitle: [],
-        platformSearch: [],
-
+        // randomTitle: [],
+        searchedPlatformArray: [],
     }
 
     //write logic for axios call here.
@@ -58,12 +56,13 @@ export class Home extends Component {
     }
 
     handlePlatformSearch = async () => {
-
-
-        
         try {
-            let result = await axios.get('')
+            let result = await axios.get('https://api.rawg.io/api/platforms?key=6a456b24916a4165a3ab90808cf6d07c')
             console.log(result)
+            this.setState({
+                searchedPlatformArray: result.data.results
+            })
+            console.log(result.data.results)
         } catch (e) {
             console.log(e)
         }
@@ -71,7 +70,7 @@ export class Home extends Component {
 
     render() {
 
-        const { searchedGameArray,  } = this.state
+        const { searchedGameArray, searchedPlatformArray } = this.state
         return (
             <div>
 
@@ -133,18 +132,22 @@ export class Home extends Component {
                         </ul>
                     </div>
 
-                    <div className='allPlatforms'>
+                    <div className='allPlatforms' onClick={this.handlePlatformSearch}>
                         Click here for additional platforms
-                        <div>
-                            <ul>
-                                <li>
-                                    <Link></Link>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                    <div>
-                        rendered platforms
+
+                    <div className='searchedPlatformResults'>
+                        {this.state.searchedPlatformArray.map((item, i) => {
+                            return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
+                                <div className='searchResults'>
+                                    <ol>
+                                        
+                                            <li className='searchResultsText'>{item.name}</li>
+                                        
+                                    </ol>
+                                </div>
+                            </Link>
+                        })}
                     </div>
 
                     <div className='row'>
@@ -167,4 +170,12 @@ export class Home extends Component {
 }
 
 export default Home
+
+//if i click on the additional platforms box, then i should make an api call to grab the list of platforms.
+    // make an array inthe state and push them into it. 
+        // render the array with a map.
+            // the map will have link tags that push us to a different page.
+                // the different page will use the search basic game with platforms as a key.
+
+
 // if i click on a circle - onclick function, then render me a game search page. in this page, i want a similiar scenario as the home page.

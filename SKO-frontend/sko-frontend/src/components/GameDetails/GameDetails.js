@@ -41,7 +41,7 @@ export class GameDetails extends Component {
                 // domain: result.data.stores.store.domain
             })
             console.log(this.state.platforms)
-            console.log(result.data.stores)
+            console.log(result.data.stores.store.domain)
 
         } catch (e) {
             console.log(e)
