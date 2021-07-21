@@ -8,7 +8,7 @@ export class nav extends Component {
         return (
             <nav className='Navbar'>
                 <div className="h1-logo">
-                    <img className='trainLogo' src='' />
+                    <img className='trainLogo' src='' alt=''/>
                     <NavLink to='/' className='navlink'>
                         <div>
                             A Steamy Stop Knock-Off!

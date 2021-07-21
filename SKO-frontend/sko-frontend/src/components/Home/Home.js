@@ -137,15 +137,15 @@ export class Home extends Component {
                     </div>
 
                     <div className='searchedPlatformResults'>
+                        <ol>
                         {this.state.searchedPlatformArray.map((item, i) => {
                             return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
                                 <div className='platformResults'>
-                                    <ul>
                                         <li className='searchResultsList'>{item.name}</li>
-                                    </ul>
                                 </div>
                             </Link>
                         })}
+                        </ol>
                     </div>
 
                     <div className='row'>
@@ -170,7 +170,7 @@ export class Home extends Component {
 export default Home
 
 //if i click on the additional platforms box, then i should make an api call to grab the list of platforms.
-    // make an array inthe state and push them into it. 
+    // make an array in the state and push them into it. 
         // render the array with a map.
             // the map will have link tags that push us to a different page.
                 // the different page will use the search basic game with platforms as a key.

@@ -4,6 +4,7 @@ import "./GameDetails.css"
 
 export class GameDetails extends Component {
     state = {
+        bigImage: '',
         name: '',
         background_image: '',
         description: '',
@@ -15,18 +16,19 @@ export class GameDetails extends Component {
         platforms: [],
         stores: [],
         domain: "",
+        screenshotsArray: [],
+        id: '',
+        screenshotsArrayImg: '',
     };
 
     async componentDidMount() {
-
-
         try {
             console.log(this.props)
             let result = await axios.get(`
             https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
             console.log(result)
 
-            // console.log(result.data.description)
+
             this.setState({
                 description: result.data.description_raw,
                 background_image: result.data.background_image,
@@ -38,27 +40,57 @@ export class GameDetails extends Component {
                 released: result.data.released,
                 platforms: result.data.platforms,
                 stores: result.data.stores,
-                // domain: result.data.stores.store.domain
+                id: result.data.id,
             })
-            console.log(this.state.platforms)
-            console.log(result.data.stores.store.domain)
+            let screenshots = await axios.get(`https://api.rawg.io/api/games/28600/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
+
+            this.setState({
+                screenshotsArray: screenshots.data.results,
+                screenshotsArrayImg: screenshots.data.results.image,
+                bigImage: screenshots.data.results[0].image
+            })
+            console.log(screenshots.data.results)
 
         } catch (e) {
             console.log(e)
         }
     }
 
+    handleOnImgClick= async (event)=> {
+        console.log(this.state.screenshotsArrayImg)
+        this.setState({
+            bigImage: this.state.screenshotsArrayImg
+        })
+    }
+
     render() {
-        const { description, background_image, name, movie_count, rating, playtime, achievements_count, released } = this.state
+        const {
+            description,
+            background_image,
+            name,
+            rating,
+            playtime,
+            achievements_count,
+            released,
+            bigImage,
+        } = this.state
+
         return (
             <div>
                 <div className='mainPage'>
                     <div className='trailer-images'>
                         <div className='trailer'>
-                            {movie_count}
+                            <img className='bigImage' src={bigImage} alt={bigImage}/>
                         </div>
                         <div className='images'>
-                            Images / screenshots_count: need to map through them.
+                                {this.state.screenshotsArray.map((item) => {
+                                    return <div key={item.id} className='imagesDiv'>
+                                        <li>
+                                            <img className='screenshotImg' src={item.image} alt={item.image} onClick={this.handleOnImgClick}/>
+                                        </li>
+                                    </div>
+                                })}
+
                         </div>
                     </div>
                     <div className='infoCenter'>
@@ -94,7 +126,7 @@ export class GameDetails extends Component {
                                     {this.state.stores.map((item) => {
                                         return (
                                             <span key={item.store.id}>
-                                                <a href={item.store.domain} target='_blank' rel="noreferrer">
+                                                <a href={`https://${item.store.domain}`} target='_blank' rel="noreferrer">
                                                     {item.store.name}
                                                 </a>
                                             </span>

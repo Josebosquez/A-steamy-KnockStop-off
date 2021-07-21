@@ -102,14 +102,14 @@ export class PlatformDetails extends Component {
     }
 
     render() {
-        const { searchedGameArray, searchBarErr, platformName} = this.state
+        const { searchBarErr, platformName} = this.state
         return (
             <div>
 
                 <div className='platformMain'>
                     <div className='platforminput-trending'>
 
-                        <div className='platformName'>The name of the platform {platformName}</div>
+                        <div className='platformName'>{platformName} Platform</div>
 
                         <div className='platforminput'>
                             <form className='platforminput'>
@@ -132,7 +132,7 @@ export class PlatformDetails extends Component {
                                         pathname: `/game-detail/${item.id}`
                                     }}>
                                         <div className='searchResults'>
-                                            <img className='platformimg' src={item.background_image} />
+                                            <img className='platformimg' src={item.background_image} alt={item.background_image}/>
                                             <p className='platformsearchResultsText'>{item.name}</p>
                                         </div>
                                     </Link>
