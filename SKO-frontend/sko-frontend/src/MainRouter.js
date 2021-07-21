@@ -6,13 +6,13 @@ import Nav from "./components/Nav/Nav"
 import Signup from './components/Signup/Signup';
 import Home from "./components/Home/Home"
 import GameDetails from './components/GameDetails/GameDetails';
+import PlatformDetails from "./components/PlatformDetails/PlatformDetails"
 
 function MainRouter(props) {
     return (
         <Router>
             <Nav />
-            <>  
-                
+            <>
                 <Route exact path="/sign-up" component={Signup} />
                 <Route
                     exact
@@ -21,6 +21,7 @@ function MainRouter(props) {
                         <Login {...routerProps} handleUserLogin={props.handleUserLogin} />
                     )}
                 />
+                <Route exact path='/platform-search/:platform' component={PlatformDetails} />
                 <Route exact path="/game-detail/:game" component={GameDetails} />
                 <Route exact path="/" component={Home} />
             </>

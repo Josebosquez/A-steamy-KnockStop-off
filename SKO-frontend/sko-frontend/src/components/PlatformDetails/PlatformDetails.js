@@ -2,14 +2,28 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios"
 
-import "./Home.css"
+import "./PlatformDetails.css"
 
-export class Home extends Component {
+export class PlatformDetails extends Component {
     state = {
+        platform: '',
+        platformName: '',
         searchBar: '',
         searchedGameArray: [],
-        // randomTitle: [],
         searchedPlatformArray: [],
+    }
+
+    async componentDidMount() { 
+        console.log(this.props)
+        try {
+            let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&platforms=${this.state.platform}`)
+            this.setState({ 
+                platform: this.props.match.params.platform
+            });
+            console.log(result);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     //write logic for axios call here.
@@ -17,7 +31,7 @@ export class Home extends Component {
         event.preventDefault()
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}&platforms=${this.state.platform}`)
 
             console.log(searchedGame.data.results)
 
@@ -69,13 +83,14 @@ export class Home extends Component {
     }
 
     render() {
-
-        const { searchedGameArray, searchedPlatformArray } = this.state
+        const { searchedGameArray, platform } = this.state
         return (
             <div>
 
                 <div className='main'>
                     <div className='input-trending'>
+
+                        <div className='platformName'>{platform}</div>
 
                         <div className='input'>
                             <form className='input'>
@@ -107,46 +122,7 @@ export class Home extends Component {
                         </div>
                     </div>
 
-                    <div className='platforms'>
-                        <ul>
-                            {/* <Link  to={{
-                                pathname: `/platform-search/${}`}} 
-                                onClick={this.handlePlatformSearch}>
-                                Nintendo Switch
-                            </Link> */}
-                            <Link>
-                                PC
-                            </Link>
-                            <Link>
-                                PS5
-                            </Link>
-                            <Link>
-                                PS4
-                            </Link>
-                            <Link>
-                                XBox Ser. X
-                            </Link>
-                            <Link>
-                                XBox 1
-                            </Link>
-                        </ul>
-                    </div>
 
-                    <div className='allPlatforms' onClick={this.handlePlatformSearch}>
-                        Click here for additional platforms
-                    </div>
-
-                    <div className='searchedPlatformResults'>
-                        {this.state.searchedPlatformArray.map((item, i) => {
-                            return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
-                                <div className='platformResults'>
-                                    <ul>
-                                        <li className='searchResultsList'>{item.name}</li>
-                                    </ul>
-                                </div>
-                            </Link>
-                        })}
-                    </div>
 
                     <div className='row'>
                         <p className='filteredTitle'>Best Rated Games of All Time!</p>
@@ -167,13 +143,7 @@ export class Home extends Component {
     }
 }
 
-export default Home
-
-//if i click on the additional platforms box, then i should make an api call to grab the list of platforms.
-    // make an array inthe state and push them into it. 
-        // render the array with a map.
-            // the map will have link tags that push us to a different page.
-                // the different page will use the search basic game with platforms as a key.
+export default PlatformDetails
 
 
-// if i click on a circle - onclick function, then render me a game search page. in this page, i want a similiar scenario as the home page.
+//in order to get movie name at the top i need to do session storage. run by ginny or pak.
