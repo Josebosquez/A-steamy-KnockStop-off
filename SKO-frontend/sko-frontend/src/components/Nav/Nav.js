@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
-import {NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import "./Nav.css";
 
 export class nav extends Component {
+
     render() {
         return (
             <nav className='Navbar'>
                 <div className="h1-logo">
-                    <NavLink  to='/'>
-                        <p>
+                    <img className='trainLogo' src='' />
+                    <NavLink to='/' className='navlink'>
+                        <div>
                             A Steamy Stop Knock-Off!
-                            </p>
+                        </div>
                     </NavLink>
                 </div>
                 <div className='nav-right-side'>
                     <ul>
-                
+
                         <li>
                             {this.props.user ? (
                                 <NavLink activeClassName="selected" to='/logout' onClick={this.props.handleUserLogout}>Logout </NavLink>
@@ -25,9 +27,9 @@ export class nav extends Component {
                         </li>
                         <li>
                             {this.props.user ? (
-                                <NavLink activeClassName="selected" to='/logout' onClick={this.props.handleUserLogout}>Logout </NavLink>
+                                <NavLink activeClassName="selected navlink" to='/logout' onClick={this.props.handleUserLogout}>Logout </NavLink>
                             ) : (
-                                <NavLink activeClassName="selected" to='/login'>Login </NavLink>)
+                                <NavLink activeClassName="selected navlink" to='/login'>Login </NavLink>)
                             }
                         </li>
                     </ul>

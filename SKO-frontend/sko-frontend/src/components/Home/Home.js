@@ -9,7 +9,9 @@ export class Home extends Component {
     state = {
         searchBar: '',
         searchedGameArray: [],
-        randomTitle: []
+        randomTitle: [],
+        platformSearch: [],
+
     }
 
     //write logic for axios call here.
@@ -38,7 +40,6 @@ export class Home extends Component {
         })
     }
 
-
     handleRandomTitle = async () => {
         try {
             let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c&metacritic=95,100`)
@@ -56,9 +57,21 @@ export class Home extends Component {
         }
     }
 
+    handlePlatformSearch = async () => {
+
+
+        
+        try {
+            let result = await axios.get('')
+            console.log(result)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     render() {
 
-        const { searchedGameArray } = this.state
+        const { searchedGameArray,  } = this.state
         return (
             <div>
 
@@ -97,29 +110,41 @@ export class Home extends Component {
 
                     <div className='platforms'>
                         <ul>
-                            <li>
+                            {/* <Link  to={{
+                                pathname: `/platform-search/${}`}} 
+                                onClick={this.handlePlatformSearch}>
                                 Nintendo Switch
-                            </li>
-                            <li>
+                            </Link> */}
+                            <Link>
                                 PC
-                            </li>
-                            <li>
+                            </Link>
+                            <Link>
                                 PS5
-                            </li>
-                            <li>
+                            </Link>
+                            <Link>
                                 PS4
-                            </li>
-                            <li>
-                                XBox Series X
-                            </li>
-                            <li>
+                            </Link>
+                            <Link>
+                                XBox Ser. X
+                            </Link>
+                            <Link>
                                 XBox 1
-                            </li>
+                            </Link>
                         </ul>
                     </div>
 
                     <div className='allPlatforms'>
                         Click here for additional platforms
+                        <div>
+                            <ul>
+                                <li>
+                                    <Link></Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        rendered platforms
                     </div>
 
                     <div className='row'>
@@ -142,3 +167,4 @@ export class Home extends Component {
 }
 
 export default Home
+// if i click on a circle - onclick function, then render me a game search page. in this page, i want a similiar scenario as the home page.

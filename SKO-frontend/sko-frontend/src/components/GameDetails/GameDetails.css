@@ -1,7 +1,7 @@
-* {
+/* * {
     margin: center;
     outline: solid white 1px;
-}
+} */
 
 .mainPage {
     height: 600px;
@@ -77,7 +77,7 @@
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .gameInfo li,
