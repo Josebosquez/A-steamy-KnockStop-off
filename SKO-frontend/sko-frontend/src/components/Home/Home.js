@@ -139,11 +139,9 @@ export class Home extends Component {
                     <div className='searchedPlatformResults'>
                         {this.state.searchedPlatformArray.map((item, i) => {
                             return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
-                                <div className='searchResults'>
+                                <div className='platformResults'>
                                     <ol>
-                                        
-                                            <li className='searchResultsText'>{item.name}</li>
-                                        
+                                        <li className='searchResultsList'>{item.name}</li>
                                     </ol>
                                 </div>
                             </Link>
