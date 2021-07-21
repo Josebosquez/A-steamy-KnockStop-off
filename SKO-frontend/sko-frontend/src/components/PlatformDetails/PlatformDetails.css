@@ -3,14 +3,14 @@
     outline: solid white 1px;
 } */
 
-.main {
+.platformMain {
     height: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.input-trending {
+.platforminput-trending {
     width: 100%;
     height: auto;
     display: flex;
@@ -19,14 +19,19 @@
     align-items: center;
 }
 
-.input input {
+.platformerrorMessage {
+    font-size: 16px;
+    color: white;
+}
+
+.platforminput input {
     margin-top: 35px;
     width: 300px;
     height: 20px;
     border: 1px solid rgb(59, 59, 136);
 }
 
-.trending {
+.platformtrending {
     margin-top: 35px;
     width: 800px;
     height: 350px;
@@ -34,14 +39,15 @@
     background-color: rgba(190, 205, 212, 0.671);
 }
 
-.searchedGameResults {
+.platformsearchedGameResults {
     display: flex;
     flex-wrap: wrap;
-    width: 1150px;
+    justify-content: center;
+    width: 700px;
     ;
 }
 
-.searchResults {
+.platformsearchResults {
     border: 1px solid black;
     width: 100px;
     height: 200px;
@@ -49,12 +55,12 @@
     margin-top: 10px;
 }
 
-.img {
+.platformimg {
     width: 100%;
     height: 60%;
 }
 
-.searchResultsText {
+.platformsearchResultsText {
     text-align: initial;
     font-size: 15px;
     margin-left: 10px;
@@ -63,83 +69,10 @@
 
 /* ---- bottom half ----- */
 
-.platforms {
-    margin-top: 50px;
-    width: 750px;
-    border: 1px solid black;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(190, 205, 212, 0.671);
-}
-
-.platforms ul {
-    width: 95%;
-    display: flex;
-    height: 100px;
-    color: white;
-    margin-top: 0;
-    margin-left: -20px;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.platforms ul a {
-    display: flex;
-    text-align: center;
-    justify-content: space-evenly;
-    align-content: center;
-    align-items: center;
-    background-color: black;
-    border-radius: 50%;
-    height: 90px;
-    width: 100px;
-    color: white;
-    text-decoration: underline
-}
-
-.platforms ul a:hover {
-    color: dodgerblue
-}
-
-.allPlatforms {
-    margin-top: 50px;
-    border: 1px solid black;
-    width: 300px
-}
-
-
-/*----- bottom-half platforms array search-----*/
-
-.searchedPlatformResults {
-    margin-top: 10px;
-    width: 800px;
-    height: auto;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    border: 1px solid black;
-}
-
-.platformResults {
-    width: 150px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin: 2px 2px 2px 2px;
-}
-
-.searchResultsList {
-    height: 20px;
-    font-size: 15px;
-    text-decoration: underline;
-}
-
 
 /*----- bottom-half row search-----*/
 
-.row {
+.platformrow {
     margin-top: 50px;
     border: 1px solid black;
     width: 80%;
@@ -147,7 +80,7 @@
     font-size: 15px;
 }
 
-.filteredTitle {
+.platformfilteredTitle {
     font-size: 25px;
     display: flex;
     justify-content: center;

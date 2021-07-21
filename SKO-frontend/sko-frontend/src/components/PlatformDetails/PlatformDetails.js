@@ -10,14 +10,15 @@ export class PlatformDetails extends Component {
         platformName: '',
         searchBar: '',
         searchedGameArray: [],
+        searchBarErr: "",
         searchedPlatformArray: [],
     }
 
-    async componentDidMount() { 
+    async componentDidMount() {
         console.log(this.props)
         try {
             let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&platforms=${this.state.platform}`)
-            this.setState({ 
+            this.setState({
                 platform: this.props.match.params.platform
             });
             console.log(result);
@@ -33,13 +34,22 @@ export class PlatformDetails extends Component {
         try {
             let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}&platforms=${this.state.platform}`)
 
-            console.log(searchedGame.data.results)
-
-            this.setState({
-                searchedGameArray: searchedGame.data.results
-            })
-
+            console.log(searchedGame)
+            console.log(searchedGame.data.count)
+            
+            if (searchedGame.data.count === 0) {
+                this.setState({
+                    searchBarErr: `this platform does not support the video game ${this.state.searchBar}`
+                })
+            } else{
+                this.setState({
+                    searchedGameArray: searchedGame.data.results,
+                    searchBarErr: '',
+                })
+                
+            }
             console.log(this.state);
+
 
         } catch (error) {
             console.log(error)
@@ -83,17 +93,17 @@ export class PlatformDetails extends Component {
     }
 
     render() {
-        const { searchedGameArray, platform } = this.state
+        const { searchedGameArray, platform, searchBarErr } = this.state
         return (
             <div>
 
-                <div className='main'>
-                    <div className='input-trending'>
+                <div className='platformMain'>
+                    <div className='platforminput-trending'>
 
-                        <div className='platformName'>{platform}</div>
+                        <div className='platformName'>The name of the platform {platform}</div>
 
-                        <div className='input'>
-                            <form className='input'>
+                        <div className='platforminput'>
+                            <form className='platforminput'>
                                 <input
                                     onChange={this.handleOnChange}
                                     placeholder='Search bar'
@@ -101,38 +111,42 @@ export class PlatformDetails extends Component {
                                 <button onClick={this.handleOnEnter}>Enter</button>
                             </form>
 
+                            <div className="platformerrorMessage">
+                                {searchBarErr && searchBarErr}
+                            </div>
                         </div>
-                        <div className='searchedGameResults'>
+
+                        <div className='platformsearchedGameResults'>
                             {this.state.searchedGameArray.map((item, i) => {
                                 if (i < 20) {
                                     return <Link key={i} to={{
                                         pathname: `/game-detail/${item.id}`
                                     }}>
                                         <div className='searchResults'>
-                                            <img className='img' src={item.background_image} />
-                                            <p className='searchResultsText'>{item.name}</p>
+                                            <img className='platformimg' src={item.background_image} />
+                                            <p className='platformsearchResultsText'>{item.name}</p>
                                         </div>
                                     </Link>
                                 }
                             })}
                         </div>
 
-                        <div className='trending'>
+                        <div className='platformtrending'>
                             Trending
                         </div>
                     </div>
 
 
 
-                    <div className='row'>
-                        <p className='filteredTitle'>Best Rated Games of All Time!</p>
+                    <div className='platformrow'>
+                        <p className='platformfilteredTitle'>Best Rated Games of All Time!</p>
                         <div>
                             First row goes here, will have smaller li's that go throughout
                         </div>
                     </div>
 
-                    <div className='row'>
-                        <p className='filteredTitle'>Filtered by Genre</p>
+                    <div className='platformrow'>
+                        <p className='platformfilteredTitle'>Filtered by Genre</p>
                         <div>
                             Second row goes here, will have smaller li's that go throughout
                         </div>
