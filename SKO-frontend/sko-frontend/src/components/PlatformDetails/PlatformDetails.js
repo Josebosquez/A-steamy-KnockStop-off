@@ -17,7 +17,7 @@ export class PlatformDetails extends Component {
     async componentDidMount() {
         console.log(this.props)
         try {
-            let result = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&platforms=${this.props.match.params.platform}`)
+            let result = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}`)
 
             let platformName = result.data.results[0].platforms.filter((item)=>{
                 return item.platform.id == this.props.match.params.platform
@@ -41,7 +41,7 @@ export class PlatformDetails extends Component {
         event.preventDefault()
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}&platforms=${this.state.platform}`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${this.state.searchBar}&platforms=${this.state.platform}`)
 
             console.log(searchedGame)
             console.log(searchedGame.data.count)
@@ -73,7 +73,7 @@ export class PlatformDetails extends Component {
 
     handleRandomTitle = async () => {
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c&metacritic=95,100`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=${process.env.REACT_APP_KEY}&metacritic=95,100`)
 
             console.log(searchedGame.data.results.name)
 
@@ -90,7 +90,7 @@ export class PlatformDetails extends Component {
 
     handlePlatformSearch = async () => {
         try {
-            let result = await axios.get('https://api.rawg.io/api/platforms?key=6a456b24916a4165a3ab90808cf6d07c')
+            let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
             console.log(result)
             this.setState({
                 searchedPlatformArray: result.data.results

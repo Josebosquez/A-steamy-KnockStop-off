@@ -27,7 +27,7 @@ export class GameDetails extends Component {
         try {
             console.log(this.props)
             let result = await axios.get(`
-            https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
+            https://api.rawg.io/api/games/${this.props.match.params.game}?key=${process.env.REACT_APP_KEY}`)
             // console.log(result)
 
             this.setState({
@@ -45,7 +45,7 @@ export class GameDetails extends Component {
                 genre: result.data.genres,
                 esrb: result.data.esrb_rating,
             })
-            let screenshots = await axios.get(`https://api.rawg.io/api/games/${this.state.id}/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
+            let screenshots = await axios.get(`https://api.rawg.io/api/games/${this.state.id}/screenshots?key=${process.env.REACT_APP_KEY}`)
 
             this.setState({
                 screenshotsArray: screenshots.data.results,

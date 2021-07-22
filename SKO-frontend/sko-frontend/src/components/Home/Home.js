@@ -17,7 +17,7 @@ export class Home extends Component {
         event.preventDefault()
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${this.state.searchBar}`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${this.state.searchBar}`)
 
             console.log(searchedGame.data.results)
 
@@ -40,7 +40,7 @@ export class Home extends Component {
 
     handleRandomTitle = async () => {
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=6a456b24916a4165a3ab90808cf6d07c&metacritic=95,100`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/genres?key=${process.env.REACT_APP_KEY}&metacritic=95,100`)
 
             console.log(searchedGame.data.results.name)
 
@@ -57,7 +57,7 @@ export class Home extends Component {
 
     handlePlatformSearch = async () => {
         try {
-            let result = await axios.get('https://api.rawg.io/api/platforms?key=6a456b24916a4165a3ab90808cf6d07c')
+            let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
             console.log(result)
             this.setState({
                 searchedPlatformArray: result.data.results
@@ -114,7 +114,7 @@ export class Home extends Component {
                                 onClick={this.handlePlatformSearch}>
                                 Nintendo Switch
                             </Link> */}
-                            <Link>
+                            {/* <Link>
                                 PC
                             </Link>
                             <Link>
@@ -128,7 +128,7 @@ export class Home extends Component {
                             </Link>
                             <Link>
                                 XBox 1
-                            </Link>
+                            </Link> */}
                         </ul>
                     </div>
 

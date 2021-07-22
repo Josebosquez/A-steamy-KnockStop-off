@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator"
+// import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator"
 
 import "./Signup.css"
 
