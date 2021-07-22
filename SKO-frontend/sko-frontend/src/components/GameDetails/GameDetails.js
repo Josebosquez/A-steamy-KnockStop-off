@@ -19,6 +19,8 @@ export class GameDetails extends Component {
         screenshotsArray: [],
         id: '',
         screenshotsArrayImg: '',
+        genre: '',
+
     };
 
     async componentDidMount() {
@@ -41,9 +43,11 @@ export class GameDetails extends Component {
                 platforms: result.data.platforms,
                 stores: result.data.stores,
                 id: result.data.id,
+                genre: result.data.genres,
             })
-            let screenshots = await axios.get(`https://api.rawg.io/api/games/28600/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
+            let screenshots = await axios.get(`https://api.rawg.io/api/games/${this.state.id}/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
 
+            // need to change this screen shots to use the id not the hardcoded one
             this.setState({
                 screenshotsArray: screenshots.data.results,
                 screenshotsArrayImg: screenshots.data.results.image,
@@ -56,10 +60,10 @@ export class GameDetails extends Component {
         }
     }
 
-    handleOnImgClick= async (event)=> {
+    handleOnImgClick = async (event) => {
         console.log(this.state.screenshotsArrayImg)
         this.setState({
-            bigImage: this.state.screenshotsArrayImg
+            bigImage: this.state.id
         })
     }
 
@@ -80,16 +84,16 @@ export class GameDetails extends Component {
                 <div className='mainPage'>
                     <div className='trailer-images'>
                         <div className='trailer'>
-                            <img className='bigImage' src={bigImage} alt={bigImage}/>
+                            <img className='bigImage' src={bigImage} alt={bigImage} />
                         </div>
                         <div className='images'>
-                                {this.state.screenshotsArray.map((item) => {
-                                    return <div key={item.id} className='imagesDiv'>
-                                        <li>
-                                            <img className='screenshotImg' src={item.image} alt={item.image} onClick={this.handleOnImgClick}/>
-                                        </li>
-                                    </div>
-                                })}
+                            {this.state.screenshotsArray.map((item) => {
+                                return <div key={item.id} className='imagesDiv'>
+                                    <li>
+                                        <img className='screenshotImg' src={item.image} alt={item.image} onClick={this.handleOnImgClick} />
+                                    </li>
+                                </div>
+                            })}
 
                         </div>
                     </div>
@@ -121,7 +125,7 @@ export class GameDetails extends Component {
                             <p>Achievements count: {achievements_count}</p>
                             <p>Released: {released}</p>
                             <div className='store'>
-                                Stores:{" "}
+                                Available Stores:{" "}
                                 <div className='storeSize'>
                                     {this.state.stores.map((item) => {
                                         return (
@@ -146,8 +150,30 @@ export class GameDetails extends Component {
                     </div>
 
                     <div className='reviews'>
-                        Reviews
-
+                        <div>
+                            <p>Rating Information</p>
+                            <div>
+                                Ersb: esrb_rating.name
+                            </div>
+                            <div>
+                                ratings: map.
+                                ratings_count:
+                            </div>
+                            <div className='platform'>
+                                Genre(s):{" "}
+                                {/* <div className='platformSize'>
+                                    {this.state.genre.map((item) => {
+                                        return (
+                                            <span key={item.genre.id}>
+                                                <li>
+                                                    {item.genre.name}
+                                                </li>
+                                            </span>
+                                        );
+                                    })}
+                                </div> */}
+                            </div>
+                        </div>
                     </div>
 
                     <div>
