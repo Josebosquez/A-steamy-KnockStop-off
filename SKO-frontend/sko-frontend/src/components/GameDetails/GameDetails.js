@@ -19,8 +19,8 @@ export class GameDetails extends Component {
         screenshotsArray: [],
         id: '',
         screenshotsArrayImg: '',
-        genre: '',
-
+        genre: [],
+        esrb: [],
     };
 
     async componentDidMount() {
@@ -28,8 +28,7 @@ export class GameDetails extends Component {
             console.log(this.props)
             let result = await axios.get(`
             https://api.rawg.io/api/games/${this.props.match.params.game}?key=6a456b24916a4165a3ab90808cf6d07c`)
-            console.log(result)
-
+            // console.log(result)
 
             this.setState({
                 description: result.data.description_raw,
@@ -44,15 +43,16 @@ export class GameDetails extends Component {
                 stores: result.data.stores,
                 id: result.data.id,
                 genre: result.data.genres,
+                esrb: result.data.esrb_rating,
             })
             let screenshots = await axios.get(`https://api.rawg.io/api/games/${this.state.id}/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
 
-            // need to change this screen shots to use the id not the hardcoded one
             this.setState({
                 screenshotsArray: screenshots.data.results,
-                screenshotsArrayImg: screenshots.data.results.image,
+                screenshotsArrayImg: screenshots.data.results,
                 bigImage: screenshots.data.results[0].image
             })
+            console.log(screenshots)
             console.log(screenshots.data.results)
 
         } catch (e) {
@@ -60,12 +60,12 @@ export class GameDetails extends Component {
         }
     }
 
-    handleOnImgClick = async (event) => {
-        console.log(this.state.screenshotsArrayImg)
-        this.setState({
-            bigImage: this.state.id
-        })
-    }
+    handleOnImgClick = async (event, index) => {
+                this.setState({
+                    bigImage: event.target.src,
+                })
+            console.log(index)
+        }
 
     render() {
         const {
@@ -152,26 +152,37 @@ export class GameDetails extends Component {
                     <div className='reviews'>
                         <div>
                             <p>Rating Information</p>
-                            <div>
-                                Ersb: esrb_rating.name
+                            <div className='rating'>
+                                Esrb Rating:{" "}
+                                <div className='ratingSize'>
+                                    {/* {this.state.esrb.map((item) => {
+                                        return (
+                                            <span key={item.id}>
+                                                <li>
+                                                    {item}
+                                                </li>
+                                            </span>
+                                        );
+                                    })} */}
+                                </div>
                             </div>
                             <div>
                                 ratings: map.
                                 ratings_count:
                             </div>
-                            <div className='platform'>
+                            <div className='rating'>
                                 Genre(s):{" "}
-                                {/* <div className='platformSize'>
+                                <div className='ratingSize'>
                                     {this.state.genre.map((item) => {
                                         return (
-                                            <span key={item.genre.id}>
+                                            <span key={item.id}>
                                                 <li>
-                                                    {item.genre.name}
+                                                    {item.name}
                                                 </li>
                                             </span>
                                         );
                                     })}
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>
