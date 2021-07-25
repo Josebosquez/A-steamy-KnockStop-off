@@ -12,6 +12,7 @@ export class Home extends Component {
         searchedPlatformArray: [],
         bestGenreGames: [],
         coronaGames:[],
+        trending: [],
     }
 
     async componentDidMount() {
@@ -21,11 +22,14 @@ export class Home extends Component {
 
             let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
 
+            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&ordering=-added`)
+
             this.setState({
                 bestGenreGames: genre.data.results,
-                coronaGames: genre1.data.results
+                coronaGames: genre1.data.results,
+                trending: trending.data.results,
             }, () => {
-                console.log(this.state.coronaGames)
+                console.log(this.state.trending)
             })
 
         } catch (e) {
@@ -124,7 +128,11 @@ export class Home extends Component {
                         </div>
 
                         <div className='trending'>
-                            Trending
+                            <div>
+                            <p className='filteredTitle'>
+                                Most anticipated upcoming games.
+                            </p>
+                            </div>
                         </div>
                     </div>
 
@@ -155,7 +163,7 @@ export class Home extends Component {
                     </div>
 
                     <div className='allPlatforms' onClick={this.handlePlatformSearch}>
-                        Click here for additional platforms
+                        Have a specific game system? Click me for more options
                     </div>
 
                     <div className='searchedPlatformResults'>
