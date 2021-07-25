@@ -27,11 +27,28 @@
 }
 
 .trending {
-    margin-top: 35px;
-    width: 800px;
+    margin-top: 0;
+    width: 1000px;
     height: 350px;
     border: 1px solid black;
     background-color: rgba(190, 205, 212, 0.671);
+    display: flex;
+}
+
+.left {
+    width: 75%;
+    border: 1px solid gold;
+    height: 100%;
+}
+
+.right {
+    border: 1px solid red;
+    width: 25%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .searchedGameResults {
@@ -54,7 +71,8 @@
     height: 60%;
 }
 
-.searchResultsText {
+.searchResultsText,
+.trendingGameTitle {
     text-align: initial;
     font-size: 15px;
     margin-left: 10px;

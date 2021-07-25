@@ -127,10 +127,26 @@ export class Home extends Component {
                             })}
                         </div>
 
-                        <div className='trending'>
-                            <div>
                             <p className='filteredTitle'>
-                                Most anticipated upcoming games.
+                                Upcoming games.
+                            </p>
+                        <div className='trending'>
+                            <div className='left'>
+hello
+                            </div>
+
+                            <div className='right'>
+                            <p className='trendingGameTitle'>
+                                Name of game: 
+                            </p>
+                            <p className='trendingGameTitle'>
+                                Release date: 
+                            </p>
+                            <p className='trendingGameTitle'>
+                                Consoles: 
+                            </p>
+                            <p className='trendingGameTitle'>
+                                Esrb rating: 
                             </p>
                             </div>
                         </div>
