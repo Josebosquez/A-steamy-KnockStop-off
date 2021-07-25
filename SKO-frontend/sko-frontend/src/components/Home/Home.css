@@ -4,7 +4,7 @@
 } */
 
 .main {
-    height: 1200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,13 +38,13 @@
     display: flex;
     flex-wrap: wrap;
     width: 1150px;
-    ;
+    height: auto;
 }
 
 .searchResults {
     border: 1px solid black;
     width: 100px;
-    height: 200px;
+    height: 250px;
     margin-left: 10px;
     margin-top: 10px;
 }
@@ -58,6 +58,7 @@
     text-align: initial;
     font-size: 15px;
     margin-left: 10px;
+    word-wrap: break-word;
 }
 
 
@@ -143,8 +144,10 @@
     margin-top: 50px;
     border: 1px solid black;
     width: 80%;
-    height: 100px;
+    height: auto;
     font-size: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .filteredTitle {
@@ -152,4 +155,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.row1 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.rowResults {
+    border: 2px solid black;
+    width: 100px;
+    height: 230px;
 }
