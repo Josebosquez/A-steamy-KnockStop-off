@@ -10,8 +10,17 @@
     align-items: center;
 }
 
+.top {
+    border: 1px solid green;
+    display: flex;
+}
+
+.sideright {
+    width: 10%;
+}
+
 .input-trending {
-    width: 100%;
+    width: 90%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -33,18 +42,24 @@
     border: 1px solid black;
     background-color: rgba(190, 205, 212, 0.671);
     display: flex;
+    flex-direction: row;
 }
 
 .left {
     width: 75%;
-    border: 1px solid gold;
-    height: 100%;
+    border: 1px solid black;
+    height: 350px;
+}
+
+.trendingImg {
+    width: 100%;
+    height: 350px;
 }
 
 .right {
-    border: 1px solid red;
+    border: 1px solid black;
     width: 25%;
-    height: auto;
+    height: 350px;
     display: flex;
     flex-direction: column;
     flex-direction: column;

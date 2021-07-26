@@ -52,8 +52,8 @@ export class GameDetails extends Component {
                 screenshotsArrayImg: screenshots.data.results,
                 bigImage: screenshots.data.results[0].image
             })
-            console.log(screenshots)
-            console.log(screenshots.data.results)
+            // console.log(screenshots)
+            // console.log(this.state.esrb)
 
         } catch (e) {
             console.log(e)
@@ -67,7 +67,7 @@ export class GameDetails extends Component {
             console.log(index)
         }
 
-    render() {
+        render() {
         const {
             description,
             background_image,
@@ -123,7 +123,7 @@ export class GameDetails extends Component {
                                 </div>
                             </div>
                             <p>Achievements count: {achievements_count}</p>
-                            <p>Released: {released}</p>
+                            <p>Release date: {released}</p>
                             <div className='store'>
                                 Available Stores:{" "}
                                 <div className='storeSize'>
@@ -153,19 +153,33 @@ export class GameDetails extends Component {
                         <div>
                             <p>Rating Information</p>
                             <div className='rating'>
-                                Esrb Rating:{" "}
+                                Esrb Rating::{" "}
                                 <div className='ratingSize'>
-                                    {/* {this.state.esrb.map((item) => {
+                                    {this.state.genre.map((item) => {
                                         return (
                                             <span key={item.id}>
                                                 <li>
-                                                    {item}
+                                                    {item.name}
                                                 </li>
                                             </span>
                                         );
-                                    })} */}
+                                    })}
                                 </div>
                             </div>
+                            {/* <div className='rating'>
+                                Esrb Rating: {" "}
+                                <div className='ratingSize'>
+                                    {this.state.esrb.map((item)=>{
+                                        return (<div>
+                                            <span key={item.id}> 
+                                                <li>
+                                                    {item.name}
+                                                </li>
+                                            </span>
+                                        </div>)
+                                    })}
+                                </div>
+                            </div> */}
                             <div>
                                 ratings: map.
                                 ratings_count:

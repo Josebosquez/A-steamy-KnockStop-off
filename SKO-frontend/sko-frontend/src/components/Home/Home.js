@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from "axios"
 
 import "./Home.css"
@@ -11,31 +11,34 @@ export class Home extends Component {
         // randomTitle: [],
         searchedPlatformArray: [],
         bestGenreGames: [],
-        coronaGames:[],
+        coronaGames: [],
         trending: [],
+        trendingPlatforms: [],
+        trendingESRB: [],
     }
 
     async componentDidMount() {
         try {
+            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&ordering=-added&page=1&page_size=1`)
+
             let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=10`)
-            console.log(genre)
+            // console.log(genre)
 
             let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
-
-            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&ordering=-added`)
 
             this.setState({
                 bestGenreGames: genre.data.results,
                 coronaGames: genre1.data.results,
                 trending: trending.data.results,
+
             }, () => {
                 console.log(this.state.trending)
             })
-
         } catch (e) {
             console.log(e)
         }
     }
+
     //write logic for axios call here.
     handleOnEnter = async (event) => {
         event.preventDefault()
@@ -92,90 +95,71 @@ export class Home extends Component {
         }
     }
 
-    
     render() {
-        const { searchedGameArray, searchedPlatformArray } = this.state
-
         return (
             <div>
                 <div className='main'>
-                    <div className='input-trending'>
-
-                        <div className='input'>
-                            <form className='input'>
-                                <input
-                                    onChange={this.handleOnChange}
-                                    placeholder='Search bar'
-                                />
-                                <button onClick={this.handleOnEnter}>Enter</button>
-                            </form>
-
+                    <div className='top'>
+                        <div className='sideright'> Search by platform
                         </div>
+                        <div className='input-trending'>
+                            <div className='input'>
+                                <form className='input'>
+                                    <input
+                                        onChange={this.handleOnChange}
+                                        placeholder='Search bar'
+                                    />
+                                    <button onClick={this.handleOnEnter}>Enter</button>
+                                </form>
 
-                        <div className='searchedGameResults'>
-                            {this.state.searchedGameArray.map((item, i) => {
-                                if (i < 20) {
-                                    return <Link key={i} to={{
-                                        pathname: `/game-detail/${item.id}`
-                                    }}>
-                                        <div className='searchResults'>
-                                            <img className='img' src={item.background_image} />
-                                            <p className='searchResultsText'>{item.name}</p>
-                                        </div>
-                                    </Link>
-                                }
-                            })}
-                        </div>
+                            </div>
+
+                            <div className='searchedGameResults'>
+                                {this.state.searchedGameArray.map((item, i) => {
+                                    if (i < 20) {
+                                        return <Link key={i} to={{
+                                            pathname: `/game-detail/${item.id}`
+                                        }}>
+                                            <div className='searchResults'>
+                                                <img className='img' src={item.background_image} />
+                                                <p className='searchResultsText'>{item.name}</p>
+                                            </div>
+                                        </Link>
+                                    }
+                                })}
+                            </div>
 
                             <p className='filteredTitle'>
                                 Upcoming games.
                             </p>
-                        <div className='trending'>
-                            <div className='left'>
-hello
-                            </div>
+                            <div className='trending'>
+                                {this.state.trending.map((item, i) => {
+                                    return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <div className='trending'>
 
-                            <div className='right'>
-                            <p className='trendingGameTitle'>
-                                Name of game: 
-                            </p>
-                            <p className='trendingGameTitle'>
-                                Release date: 
-                            </p>
-                            <p className='trendingGameTitle'>
-                                Consoles: 
-                            </p>
-                            <p className='trendingGameTitle'>
-                                Esrb rating: 
-                            </p>
+                                            <div className='left'>
+                                                <img className='trendingImg' src={item.background_image} alt={item.background_image} />
+                                            </div>
+                                            <div className='right'>
+                                                <p className='trendingGameTitle'>
+                                                    Name of game: {item.name}
+                                                </p>
+                                                <p className='trendingGameTitle'>
+                                                    Release date: {item.released}
+                                                </p>
+                                                <p className='trendingGameTitle'>
+                                                    Consoles: platforms go here
+                                                </p>
+                                                <p className='trendingGameTitle'>
+                                                    Esrb rating: item.ratings
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                })}
+
                             </div>
                         </div>
-                    </div>
-
-                    <div className='platforms'>
-                        <ul>
-
-                            {/* <Link  to={{
-                                pathname: `platform-search/:platform`}}
-                                onClick={this.handleOnPlatformClick}>
-                                Nintendo Switch
-                            </Link>
-                            <Link>
-                                PC
-                            </Link>
-                            <Link>
-                                PS5 
-                            </Link>
-                            <Link>
-                                PS4
-                            </Link>
-                            <Link>
-                                XBox Ser. X
-                            </Link>
-                            <Link>
-                                XBox 1
-                            </Link> */}
-                        </ul>
                     </div>
 
                     <div className='allPlatforms' onClick={this.handlePlatformSearch}>
@@ -202,15 +186,15 @@ hello
                         <p className='filteredTitle'>Best Rated Games of All Time!</p>
 
                         <div className='row1'>
-                            
-                                {this.state.bestGenreGames.map((item, i) => {
-                                    return <div className='rowResults'>
-                                        <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
-                                                <img className='img' src={item.background_image} alt={item.background_image}/>
-                                                <p className='searchResultsText'>{item.name}</p>
-                                        </Link>
-                                    </div>
-                                })}
+
+                            {this.state.bestGenreGames.map((item, i) => {
+                                return <div className='rowResults'>
+                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <img className='img' src={item.background_image} alt={item.background_image} />
+                                        <p className='searchResultsText'>{item.name}</p>
+                                    </Link>
+                                </div>
+                            })}
 
                         </div>
                     </div>
@@ -218,14 +202,14 @@ hello
                         <p className='filteredTitle'>Corona Virus Games!</p>
 
                         <div className='row1'>
-                                {this.state.coronaGames.map((item, i) => {
-                                    return <div className='rowResults'>
-                                        <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
-                                                <img className='img' src={item.background_image} alt={item.background_image}/>
-                                                <p className='searchResultsText'>{item.name}</p>
-                                        </Link>
-                                    </div>
-                                })}
+                            {this.state.coronaGames.map((item, i) => {
+                                return <div className='rowResults'>
+                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <img className='img' src={item.background_image} alt={item.background_image} />
+                                        <p className='searchResultsText'>{item.name}</p>
+                                    </Link>
+                                </div>
+                            })}
                         </div>
                     </div>
                 </div>

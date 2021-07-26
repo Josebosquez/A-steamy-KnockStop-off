@@ -12,6 +12,9 @@ export class PlatformDetails extends Component {
         searchedGameArray: [],
         searchBarErr: "",
         searchedPlatformArray: [],
+        trending: [],
+        bestGenreGames: [],
+        coronaGames: [],
     }
 
     async componentDidMount() {
@@ -19,18 +22,28 @@ export class PlatformDetails extends Component {
         try {
             let result = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}`)
 
-            let platformName = result.data.results[0].platforms.filter((item)=>{
+            let platformName = result.data.results[0].platforms.filter((item) => {
                 return item.platform.id == this.props.match.params.platform
             })
+            
+            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&platforms=${this.props.match.params.platform}&ordering=-added&page=1&page_size=1`)
+
+            let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}&metacritic=90,100&page=1&page_size=10`)
+
+            let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
 
             this.setState({
                 platform: this.props.match.params.platform,
                 platformName: platformName[0].platform.name,
+                trending: trending.data.results,
+                bestGenreGames: genre.data.results,
+                coronaGames: genre1.data.results,
+            }, () => {
+                console.log(this.state.trending)
+                console.log(result);
+                console.log(this.state.searchedGameArray);
+            });
 
-            }) ;
-            console.log(result);
-            console.log(this.state.searchedGameArray);
-        
         } catch (e) {
             console.log(e);
         }
@@ -45,17 +58,17 @@ export class PlatformDetails extends Component {
 
             console.log(searchedGame)
             console.log(searchedGame.data.count)
-            
+
             if (searchedGame.data.count === 0) {
                 this.setState({
                     searchBarErr: `this platform does not support the video game ${this.state.searchBar}`
                 })
-            } else{
+            } else {
                 this.setState({
                     searchedGameArray: searchedGame.data.results,
                     searchBarErr: '',
                 })
-                
+
             }
             console.log(this.state);
 
@@ -102,7 +115,7 @@ export class PlatformDetails extends Component {
     }
 
     render() {
-        const { searchBarErr, platformName} = this.state
+        const { searchBarErr, platformName } = this.state
         return (
             <div>
 
@@ -132,7 +145,7 @@ export class PlatformDetails extends Component {
                                         pathname: `/game-detail/${item.id}`
                                     }}>
                                         <div className='searchResults'>
-                                            <img className='platformimg' src={item.background_image} alt={item.background_image}/>
+                                            <img className='platformimg' src={item.background_image} alt={item.background_image} />
                                             <p className='platformsearchResultsText'>{item.name}</p>
                                         </div>
                                     </Link>
@@ -140,24 +153,64 @@ export class PlatformDetails extends Component {
                             })}
                         </div>
 
+                        <p className='filteredTitle'>
+                            Upcoming games.
+                        </p>
                         <div className='platformtrending'>
-                            Trending
+                            {this.state.trending.map((item, i) => {
+                                return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                    <div className='trending'>
+
+                                        <div className='left'>
+                                            <img className='trendingImg' src={item.background_image} alt={item.background_image} />
+                                        </div>
+                                        <div className='right'>
+                                            <p className='trendingGameTitle'>
+                                                Name of game: {item.name}
+                                            </p>
+                                            <p className='trendingGameTitle'>
+                                                Release date: {item.released}
+                                            </p>
+                                            <p className='trendingGameTitle'>
+                                                Consoles: platforms go here
+                                            </p>
+                                            <p className='trendingGameTitle'>
+                                                Esrb rating: item.ratings
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            })}
+
                         </div>
                     </div>
 
-
-
-                    <div className='platformrow'>
-                        <p className='platformfilteredTitle'>Best Rated Games of All Time!</p>
-                        <div>
-                            First row goes here, will have smaller li's that go throughout
+                    <div className='row'>
+                        <p className='filteredTitle'>Best Rated Games of All Time!</p>
+                        <div className='row1'>
+                            {this.state.bestGenreGames.map((item, i) => {
+                                return <div className='rowResults'>
+                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <img className='img' src={item.background_image} alt={item.background_image} />
+                                        <p className='searchResultsText'>{item.name}</p>
+                                    </Link>
+                                </div>
+                            })}
                         </div>
                     </div>
 
-                    <div className='platformrow'>
-                        <p className='platformfilteredTitle'>Filtered by Genre</p>
-                        <div>
-                            Second row goes here, will have smaller li's that go throughout
+                    <div className='row'>
+                        <p className='filteredTitle'>Corona Virus Games!</p>
+
+                        <div className='row1'>
+                            {this.state.coronaGames.map((item, i) => {
+                                return <div className='rowResults'>
+                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <img className='img' src={item.background_image} alt={item.background_image} />
+                                        <p className='searchResultsText'>{item.name}</p>
+                                    </Link>
+                                </div>
+                            })}
                         </div>
                     </div>
                 </div>

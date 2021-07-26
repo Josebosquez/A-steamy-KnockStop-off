@@ -4,10 +4,11 @@
 } */
 
 .platformMain {
-    height: 1200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-content: center;
 }
 
 .platforminput-trending {
@@ -36,11 +37,13 @@
 }
 
 .platformtrending {
-    margin-top: 35px;
-    width: 800px;
+    margin-top: 0;
+    width: 1000px;
     height: 350px;
-    border: px solid black;
+    border: 1px solid black;
     background-color: rgba(190, 205, 212, 0.671);
+    display: flex;
+    flex-direction: row;
 }
 
 .platformsearchedGameResults {
@@ -75,18 +78,3 @@
 
 
 /*----- bottom-half row search-----*/
-
-.platformrow {
-    margin-top: 50px;
-    border: 1px solid black;
-    width: 80%;
-    height: 100px;
-    font-size: 15px;
-}
-
-.platformfilteredTitle {
-    font-size: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
