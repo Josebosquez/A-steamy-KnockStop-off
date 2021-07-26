@@ -21,6 +21,11 @@ export class Signup extends Component {
         passwordError: "",
 
         isButtonDisabled: true,
+        firstNameOnFocus:  false,
+        lastNameOnFocus:  false,
+        usernameOnFocus:  false,
+        firstNameOnFocus:  false,
+        firstNameOnFocus:  false,
     }
 componentDidMount(){
     let isAuth = checkIfAuth();
@@ -132,6 +137,15 @@ componentDidMount(){
         }
     };
 
+    handleInputOnFocus = (event) => {
+        console.log(event.target.name);
+        if (!this.state[`${event.target.name}OnFocus`]) { 
+            this.setState({
+                [`${event.target.name}OnFocus`]: true, 
+            });
+        }
+    };
+
     render() {
         const {
             firstName,
@@ -162,7 +176,7 @@ componentDidMount(){
                                     onChange={this.handleOnChange}
                                     autoFocus
                                 // onBlur={this.handleOnBlur} // if we click here, and dont type, throws err in the firstNameError below.
-                                // onFocus={this.handleInputOnFocus} // if it is false, set to true
+                                onFocus={this.handleInputOnFocus} 
                                 />
                                 <div className="errorMessage">
                                     {firstNameError && firstNameError} 
@@ -181,7 +195,7 @@ componentDidMount(){
                                     name="lastName"
                                     onChange={this.handleOnChange}
                                 // onBlur={this.handleOnBlur}
-                                // onFocus={this.handleInputOnFocus}
+                                onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {lastNameError && lastNameError}
@@ -200,7 +214,7 @@ componentDidMount(){
                                     onChange={this.handleOnChange}
                                     name="email"
                                 // onBlur={this.handleOnBlur}
-                                // onFocus={this.handleInputOnFocus}
+                                onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {emailError && emailError}
@@ -219,7 +233,7 @@ componentDidMount(){
                                     onChange={this.handleOnChange}
                                     name="password"
                                 // onBlur={this.handleOnBlur}
-                                // onFocus={this.handleInputOnFocus}
+                                onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {passwordError && passwordError}

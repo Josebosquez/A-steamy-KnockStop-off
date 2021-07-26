@@ -127,8 +127,7 @@
 .bottomPage {
     height: auto;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-content: center;
     align-items: center;
 }
@@ -155,7 +154,56 @@
     text-decoration: none;
 }
 
-.ratingSize li {
+.ratingSize ul {
+    text-decoration: none;
+    width: 150px;
+    margin-right: 10px;
+}
+
+.ratingSize ul span {
     text-decoration: none;
     width: 100%;
+    margin-right: 10px;
+}
+
+.ptag {
+    text-align: center;
+}
+
+.ulSpan {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid orangered;
+    justify-content: flex-start;
+}
+
+.rating {
+    width: 100%;
+    height: auto;
+    text-decoration: none;
+}
+
+.OLLI {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    width: 400px;
+    height: auto;
+    text-decoration-style: none;
+}
+
+.ratingSize ol {
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ratingSize ol li {
+    text-decoration: none;
+    width: 150px;
+    margin-right: 28px;
 }

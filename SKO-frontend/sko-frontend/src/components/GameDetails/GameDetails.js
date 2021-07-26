@@ -21,6 +21,7 @@ export class GameDetails extends Component {
         screenshotsArrayImg: '',
         genre: [],
         esrb: [],
+        tags: [],
     };
 
     async componentDidMount() {
@@ -44,6 +45,7 @@ export class GameDetails extends Component {
                 id: result.data.id,
                 genre: result.data.genres,
                 esrb: result.data.esrb_rating,
+                tags: result.data.tags,
             })
             let screenshots = await axios.get(`https://api.rawg.io/api/games/${this.state.id}/screenshots?key=${process.env.REACT_APP_KEY}`)
 
@@ -53,7 +55,7 @@ export class GameDetails extends Component {
                 bigImage: screenshots.data.results[0].image
             })
             // console.log(screenshots)
-            // console.log(this.state.esrb)
+            console.log(result)
 
         } catch (e) {
             console.log(e)
@@ -61,13 +63,13 @@ export class GameDetails extends Component {
     }
 
     handleOnImgClick = async (event, index) => {
-                this.setState({
-                    bigImage: event.target.src,
-                })
-            console.log(index)
-        }
+        this.setState({
+            bigImage: event.target.src,
+        })
+        console.log(index)
+    }
 
-        render() {
+    render() {
         const {
             description,
             background_image,
@@ -77,6 +79,7 @@ export class GameDetails extends Component {
             achievements_count,
             released,
             bigImage,
+            
         } = this.state
 
         return (
@@ -151,58 +154,41 @@ export class GameDetails extends Component {
 
                     <div className='reviews'>
                         <div>
-                            <p>Rating Information</p>
+                            <p className='ptag'>Rating Information</p>
                             <div className='rating'>
-                                Esrb Rating::{" "}
-                                <div className='ratingSize'>
-                                    {this.state.genre.map((item) => {
+                                Esrb Rating: {this.state.esrb.name}
+                            </div>
+                            <br/>
+                            <div className='ratingSize' >
+                                Tags:
+                                <div className='OLLI'>
+                                    <ol>
+                                    {this.state.tags.map((item) => {
+                                        
                                         return (
-                                            <span key={item.id}>
-                                                <li>
+                                            <li key={item.id}>
                                                     {item.name}
-                                                </li>
-                                            </span>
+                                            </li>
                                         );
                                     })}
+                                    </ol>
                                 </div>
-                            </div>
-                            {/* <div className='rating'>
-                                Esrb Rating: {" "}
-                                <div className='ratingSize'>
-                                    {this.state.esrb.map((item)=>{
-                                        return (<div>
-                                            <span key={item.id}> 
-                                                <li>
-                                                    {item.name}
-                                                </li>
-                                            </span>
-                                        </div>)
-                                    })}
-                                </div>
-                            </div> */}
-                            <div>
-                                ratings: map.
-                                ratings_count:
                             </div>
                             <div className='rating'>
                                 Genre(s):{" "}
                                 <div className='ratingSize'>
+                                    <ul>
                                     {this.state.genre.map((item) => {
                                         return (
                                             <span key={item.id}>
-                                                <li>
                                                     {item.name}
-                                                </li>
                                             </span>
                                         );
                                     })}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div>
-                        another one
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@ export class PlatformDetails extends Component {
             let platformName = result.data.results[0].platforms.filter((item) => {
                 return item.platform.id == this.props.match.params.platform
             })
-            
+
             let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&platforms=${this.props.match.params.platform}&ordering=-added&page=1&page_size=1`)
 
             let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}&metacritic=90,100&page=1&page_size=10`)
@@ -41,7 +41,7 @@ export class PlatformDetails extends Component {
             }, () => {
                 console.log(this.state.trending)
                 console.log(result);
-                console.log(this.state.searchedGameArray);
+                console.log(this.state.coronaGames);
             });
 
         } catch (e) {
@@ -203,14 +203,18 @@ export class PlatformDetails extends Component {
                         <p className='filteredTitle'>Corona Virus Games!</p>
 
                         <div className='row1'>
-                            {this.state.coronaGames.map((item, i) => {
-                                return <div className='rowResults'>
-                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
-                                        <img className='img' src={item.background_image} alt={item.background_image} />
-                                        <p className='searchResultsText'>{item.name}</p>
-                                    </Link>
-                                </div>
-                            })}
+                            {this.state.coronaGames.length > 0 ? (
+                                this.state.coronaGames.map((item, i) => {
+                                    return (<div className='rowResults'>
+                                        <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                            <img className='img' src={item.background_image} alt={item.background_image} />
+                                            <p className='searchResultsText'>{item.name}</p>
+                                        </Link>
+                                    </div>
+                                    )
+                                }
+                                )
+                            ) : <div> No corona Games</div>}
                         </div>
                     </div>
                 </div>

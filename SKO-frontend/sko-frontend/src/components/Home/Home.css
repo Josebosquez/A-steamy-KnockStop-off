@@ -67,7 +67,6 @@
     flex-wrap: wrap;
     width: 1150px;
     height: auto;
-    overflow-y: scroll;
 }
 
 .searchResults {

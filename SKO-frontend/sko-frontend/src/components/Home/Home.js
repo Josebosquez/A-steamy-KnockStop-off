@@ -150,7 +150,7 @@ export class Home extends Component {
                             </p>
                             <div className='trending'>
                                 {this.state.trending.map((item, i) => {
-                                    return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                    return <Link key={i} to={{pathname:`/game-detail/${item.id}`}}>
                                         <div className='trending'>
 
                                             <div className='left'>
@@ -164,10 +164,19 @@ export class Home extends Component {
                                                     Release date: {item.released}
                                                 </p>
                                                 <p className='trendingGameTitle'>
-                                                    Consoles: platforms go here
+                                                    Consoles: {item.platforms.map((item)=>{
+                                                        return <li> 
+                                                        {item.platform.name}
+                                                        </li>
+                                                    })}
                                                 </p>
                                                 <p className='trendingGameTitle'>
-                                                    Esrb rating: item.ratings
+                                                    {/* Esrb rating: {item.esrb_rating} */}
+                                                    {/* Esrb rating: {item.platforms.map((item) => {
+                                                        return <li>
+                                                            {item.platform.name}
+                                                        </li>
+                                                    })} */}
                                                 </p>
                                             </div>
                                         </div>
