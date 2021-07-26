@@ -44,7 +44,7 @@ export class Home extends Component {
         event.preventDefault()
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${this.state.searchBar}`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${this.state.searchBar}&page_size=100`)
 
             console.log(searchedGame.data.results)
 
@@ -100,8 +100,24 @@ export class Home extends Component {
             <div>
                 <div className='main'>
                     <div className='top'>
-                        <div className='sideright'> Search by platform
+                        <div className='allPlatforms' onClick={this.handlePlatformSearch}>
+                            Have a specific game system? Click me for more options
+                            
+                            <div className='searchedPlatformResults'>
+                                <ol>
+                                    {this.state.searchedPlatformArray.map((item, i) => {
+                                        return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
+                                            <div className='platformResults'>
+                                                <li className='searchResultsList'>
+                                                    {item.name}
+                                                </li>
+                                            </div>
+                                        </Link>
+                                    })}
+                                </ol>
+                            </div>
                         </div>
+
                         <div className='input-trending'>
                             <div className='input'>
                                 <form className='input'>
@@ -160,26 +176,6 @@ export class Home extends Component {
 
                             </div>
                         </div>
-                    </div>
-
-                    <div className='allPlatforms' onClick={this.handlePlatformSearch}>
-                        Have a specific game system? Click me for more options
-                    </div>
-
-                    <div className='searchedPlatformResults'>
-                        <ol>
-                            {this.state.searchedPlatformArray.map((item, i) => {
-                                return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
-                                    <div className='platformResults'>
-
-                                        <li className='searchResultsList'>
-                                            {item.name}
-                                        </li>
-
-                                    </div>
-                                </Link>
-                            })}
-                        </ol>
                     </div>
 
                     <div className='row'>
