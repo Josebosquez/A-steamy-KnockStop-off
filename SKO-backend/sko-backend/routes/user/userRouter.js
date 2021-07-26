@@ -4,10 +4,10 @@ const router = express.Router();
 const { signup, login } = require("./controller/userController");
 
 const checkIsUndefined = require("./helpers/checkIsUndefined");
-const checkIsEmptyFunc = require("./helpers/checkIsEmptyFunc");
-const checkIsStrongPasswordFunc = require("./helpers/checkIsStrongPasswordFunc");
 
-const {
+const { 
+  checkIsEmptyFunc,
+  checkIsStrongPasswordFunc,
   checkIsEmailFunc,
   checkIsAlphaFunc,
   checkIsAlphanumericFunc,
