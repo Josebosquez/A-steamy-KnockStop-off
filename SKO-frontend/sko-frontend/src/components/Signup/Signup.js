@@ -235,7 +235,7 @@ componentDidMount(){
 
                         <div className='copyright'>
                             <p>
-                                By clicking "Continue", I agree to the <Link to={{ pathname: "/login" }} className='termsofservice'>Terms of Service</Link>  and <Link to={{ pathname: "/login" }} className='privacypolicy'>Privacy Policy</Link>.
+                                By clicking "Continue", I agree to the <a href='https://funny-wifi.com/static/wifi-images/rick-rolled.jpg' target="_blank" className='termsofservice'>Terms of Service</a>  and <a href='https://www.exterro.com/images/uploads/blogPosts/Baby-Yoda-LinkedIn.png' target="_blank" className='privacypolicy'>Privacy Policy</a>.
                             </p>
                             <div className='question'>
                                 <p>
