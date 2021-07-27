@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import checkIfAuth from '../../utils/checkIfAuth'
 import { Link } from 'react-router-dom'
 import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator"
+import Axios from '../../utils/Axios'
 
 import "./Signup.css"
 
@@ -14,30 +15,51 @@ export class Signup extends Component {
         password: "",
         confirmPassword: "",
 
-        firstNameError: "", 
+        firstNameError: "",
         lastNameError: "",
         usernameError: "",
         emailError: "",
         passwordError: "",
 
         isButtonDisabled: true,
-        firstNameOnFocus:  false,
-        lastNameOnFocus:  false,
-        usernameOnFocus:  false,
-        firstNameOnFocus:  false,
-        firstNameOnFocus:  false,
+        firstNameOnFocus: false,
+        lastNameOnFocus: false,
+        usernameOnFocus: false,
+        emailOnFocus: false,
+        passwordOnFocus: false,
     }
-componentDidMount(){
-    let isAuth = checkIfAuth();
-    if (isAuth){
-        this.props.history.push()
+    componentDidMount() {
+        let isAuth = checkIfAuth();
+        if (isAuth) {
+            this.props.history.push('/')
+        }
     }
-}
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.isButtonDisabled === true) {
+            if (
+                this.state.firstNameOnFocus &&
+                this.state.lastNameOnFocus &&
+                this.state.emailOnFocus &&
+                this.state.passwordOnFocus
+            ) {
+                if (
+                    this.state.firstNameError.length === 0 &&
+                    this.state.lastNameError.length === 0 &&
+                    this.state.emailError.length === 0 &&
+                    this.state.passwordError.length === 0
+                ) {
+                    this.setState({
+                        isButtonDisabled: false,
+                    });
+                }
+            }
+        }
+    }
 
     handleOnChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
-        },() => {
+        }, () => {
             if (
                 event.target.name === "firstName" ||
                 event.target.name === "lastName"
@@ -55,28 +77,24 @@ componentDidMount(){
             if (event.target.name === "password") {
                 this.handlePasswordInput();
             }
-
-            if (event.target.name === "confirmPassword") {
-                this.handleConfirmPasswordInput();
-            }
         }
-    );
+        );
     };
 
     handleFirstNameAndLastNameInput = (event) => {
         if (this.state[event.target.name].length > 0) {
-            if (isAlpha(this.state[event.target.name])) { 
+            if (isAlpha(this.state[event.target.name])) {
                 this.setState({
                     [`${event.target.name}Error`]: "",
                 });
-            } else { 
+            } else {
                 this.setState({
                     [`${event.target.name}Error`]: `${event.target.placeholder} can only have alphabet`,
                     isButtonDisabled: true,
                 });
             }
         } else {
-            this.setState({ 
+            this.setState({
                 [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
                 isButtonDisabled: true,
             });
@@ -84,13 +102,13 @@ componentDidMount(){
     };
 
     handleEmailInput = () => {
-        if (this.state.email.length === 0) { 
+        if (this.state.email.length === 0) {
             this.setState({
                 emailError: "Email cannot be empty",
                 isButtonDisabled: true,
             });
         } else {
-            if (isEmail(this.state.email)) { 
+            if (isEmail(this.state.email)) {
                 this.setState({
                     emailError: "",
                 });
@@ -102,33 +120,20 @@ componentDidMount(){
             }
         }
     };
-    
-    handlePasswordInput = () => {
-        if (this.state.confirmPasswordOnFocus) { 
-            if (this.state.password !== this.state.confirmPassword) {  
-                this.setState({
-                    confirmPasswordError: "Password does not match", 
-                    isButtonDisabled: true,
-                });
-            } else {
-                this.setState({
-                    confirmPasswordError: "",
-                });
-            }
-        }
 
-        if (this.state.password.length === 0) { 
+    handlePasswordInput = () => {
+        if (this.state.password.length === 0) {
             this.setState({
-                passwordError: "Password cannot be empty", 
+                passwordError: "Password cannot be empty",
                 isButtonDisabled: true,
             });
         } else {
-            if (isStrongPassword(this.state.password)) { 
+            if (isStrongPassword(this.state.password)) {
                 this.setState({
-                    passwordError: "", 
+                    passwordError: "",
                 });
             } else {
-                this.setState({ 
+                this.setState({
                     passwordError:
                         "Password must contains 1 uppercase, 1 lowercase, 1 special character, 1 number and minimul of 8 charactors long",
                     isButtonDisabled: true,
@@ -139,12 +144,15 @@ componentDidMount(){
 
     handleInputOnFocus = (event) => {
         console.log(event.target.name);
-        if (!this.state[`${event.target.name}OnFocus`]) { 
+        if (!this.state[`${event.target.name}OnFocus`]) {
             this.setState({
-                [`${event.target.name}OnFocus`]: true, 
+                [`${event.target.name}OnFocus`]: true,
             });
         }
     };
+
+    handleOnSubmit
+
 
     render() {
         const {
@@ -160,10 +168,10 @@ componentDidMount(){
 
         return (
             <div className="container">
-                <div className="form-text">Sign up</div> 
+                <div className="form-text">Sign up</div>
 
                 <div className="form-div">
-                    <form className="form" onSubmit={this.handleOnSubmit}>  
+                    <form className="form" onSubmit={this.handleOnSubmit}>
                         <div className="form-group-block">
                             <div className="block-container">
                                 <label htmlFor="firstName">First Name</label>
@@ -175,18 +183,18 @@ componentDidMount(){
                                     name="firstName"
                                     onChange={this.handleOnChange}
                                     autoFocus
-                                // onBlur={this.handleOnBlur} // if we click here, and dont type, throws err in the firstNameError below.
-                                onFocus={this.handleInputOnFocus} 
+                                    // onBlur={this.handleOnBlur} // if we click here, and dont type, throws err in the firstNameError below.
+                                    onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
-                                    {firstNameError && firstNameError} 
+                                    {firstNameError && firstNameError}
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-group-block">
                             <div className="block-container">
-                                <label htmlFor="firstName">First Name</label>
+                                <label htmlFor="firstName">Last Name</label>
                                 <input
                                     type="text"
                                     id="lastName"
@@ -194,8 +202,8 @@ componentDidMount(){
                                     placeholder="Last Name"
                                     name="lastName"
                                     onChange={this.handleOnChange}
-                                // onBlur={this.handleOnBlur}
-                                onFocus={this.handleInputOnFocus}
+                                    // onBlur={this.handleOnBlur}
+                                    onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {lastNameError && lastNameError}
@@ -213,8 +221,8 @@ componentDidMount(){
                                     placeholder="Email"
                                     onChange={this.handleOnChange}
                                     name="email"
-                                // onBlur={this.handleOnBlur}
-                                onFocus={this.handleInputOnFocus}
+                                    // onBlur={this.handleOnBlur}
+                                    onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {emailError && emailError}
@@ -232,8 +240,8 @@ componentDidMount(){
                                     placeholder="Password"
                                     onChange={this.handleOnChange}
                                     name="password"
-                                // onBlur={this.handleOnBlur}
-                                onFocus={this.handleInputOnFocus}
+                                    // onBlur={this.handleOnBlur}
+                                    onFocus={this.handleInputOnFocus}
                                 />
                                 <div className="errorMessage">
                                     {passwordError && passwordError}
@@ -253,10 +261,10 @@ componentDidMount(){
                             </p>
                             <div className='question'>
                                 <p>
-                                Already have an account? 
-                            </p>
-                                <Link to={{ pathname:"/login"}} className='signIn'>Sign In</Link>
-                                </div>
+                                    Already have an account?
+                                </p>
+                                <Link to={{ pathname: "/login" }} className='signIn'>Sign In</Link>
+                            </div>
                         </div>
                     </form>
                 </div>
