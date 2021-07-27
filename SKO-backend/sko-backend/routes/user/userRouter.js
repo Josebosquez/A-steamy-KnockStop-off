@@ -10,7 +10,6 @@ const {
   checkIsStrongPasswordFunc,
   checkIsEmailFunc,
   checkIsAlphaFunc,
-  checkIsAlphanumericFunc,
 } = require("./helpers/authMiddleware");
 
 router.post(
@@ -20,7 +19,6 @@ router.post(
   checkIsStrongPasswordFunc,
   checkIsEmailFunc,
   checkIsAlphaFunc,
-  checkIsAlphanumericFunc,
   signup
 );
 

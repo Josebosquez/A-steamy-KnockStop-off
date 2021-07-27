@@ -4,7 +4,7 @@ const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 
 async function signup(req, res, next) {
-  const { username, email, password, firstName, lastName } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
   const { errorObj } = res.locals;
 
@@ -20,7 +20,6 @@ async function signup(req, res, next) {
       firstName,
       lastName,
       email,
-      username,
       password: hashedPassword,
     });
 
@@ -59,10 +58,9 @@ async function login(req, res) {
           payload: "Please check your email and password",
         });
       } else {
-        let jwtToken = jwt.sign( // shows what we want exposed and wat we dont want exposed
+        let jwtToken = jwt.sign( 
           {
-            email: foundUser.email, //stand is to expose only the email address
-            // username: foundUser.username,
+            email: foundUser.email, 
           },
           process.env.PRIVATE_JWT_KEY,
           {
