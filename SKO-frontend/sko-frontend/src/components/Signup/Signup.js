@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import checkIfAuth from '../../utils/checkIfAuth'
-import { Link } from 'react-router-dom'
-import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator"
-import Axios from '../../utils/Axios'
+import React, { Component } from 'react';
+
+import checkIfAuth from '../../utils/checkIfAuth';
+import { Link } from 'react-router-dom';
+import { isAlpha, isEmail, isStrongPassword } from "validator";
+import Axios from '../../utils/Axios';
+import { toast } from 'react-toastify';
 
 import "./Signup.css"
 
@@ -151,8 +153,39 @@ export class Signup extends Component {
         }
     };
 
-    handleOnSubmit
+    handleOnSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            let obj = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+            }
 
+            let success = await Axios.post('api/user/sign-up', obj)
+            console.log(success)
+            toast.success(`User created. Please log in`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (e) {
+            toast.error(`${e.response.data.message}!`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    };
 
     render() {
         const {
