@@ -11,9 +11,9 @@ import PlatformDetails from "./components/PlatformDetails/PlatformDetails"
 function MainRouter(props) {
     return (
         <Router>
-            <Nav />
+            <Nav user={props.user} handleUserLogout={props.handleUserLogout}/>
             <>
-                <Route exact path="/sign-up" component={Signup} />
+                <Route exact path="/sign-up" component={Signup}  />
                 <Route
                     exact
                     path="/login"

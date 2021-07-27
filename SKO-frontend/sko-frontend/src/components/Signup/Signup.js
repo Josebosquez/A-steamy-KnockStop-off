@@ -12,30 +12,29 @@ export class Signup extends Component {
     state = {
         firstName: "",
         lastName: "",
-        username: "",
         email: "",
         password: "",
         confirmPassword: "",
 
         firstNameError: "",
         lastNameError: "",
-        usernameError: "",
         emailError: "",
         passwordError: "",
 
         isButtonDisabled: true,
         firstNameOnFocus: false,
         lastNameOnFocus: false,
-        usernameOnFocus: false,
         emailOnFocus: false,
         passwordOnFocus: false,
-    }
+    };
+
     componentDidMount() {
         let isAuth = checkIfAuth();
         if (isAuth) {
-            this.props.history.push('/')
+            this.props.history.push('/login')
         }
-    }
+    };
+
     componentDidUpdate(prevProps, prevState) {
         if (prevState.isButtonDisabled === true) {
             if (
@@ -56,7 +55,7 @@ export class Signup extends Component {
                 }
             }
         }
-    }
+    };
 
     handleOnChange = (event) => {
         this.setState({
@@ -73,9 +72,6 @@ export class Signup extends Component {
                 this.handleEmailInput();
             }
 
-            if (event.target.name === "username") {
-                this.handleUsernameInput();
-            }
             if (event.target.name === "password") {
                 this.handlePasswordInput();
             }

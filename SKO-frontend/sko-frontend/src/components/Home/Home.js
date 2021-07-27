@@ -26,11 +26,13 @@ export class Home extends Component {
 
             let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
 
+            let platformSearch = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
+
             this.setState({
                 bestGenreGames: genre.data.results,
                 coronaGames: genre1.data.results,
                 trending: trending.data.results,
-
+                searchedPlatformArray: platformSearch.data.results
             }, () => {
                 console.log(this.state.trending)
             })
@@ -82,37 +84,24 @@ export class Home extends Component {
         }
     }
 
-    handlePlatformSearch = async () => {
-        try {
-            let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
-            console.log(result)
-            this.setState({
-                searchedPlatformArray: result.data.results
-            })
-            console.log(result.data.results)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     render() {
         return (
             <div>
                 <div className='main'>
                     <div className='top'>
-                        <div className='allPlatforms' onClick={this.handlePlatformSearch}>
-                            Have a specific game system? Click me for more options
-                            
+                        <div className='allPlatforms'>
+                            <p className='filteredTitle'>Platforms</p>
+
                             <div className='searchedPlatformResults'>
                                 <ol>
                                     {this.state.searchedPlatformArray.map((item, i) => {
-                                        return <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
-                                            <div className='platformResults'>
+                                        return <div className='platformResults'>
+                                            <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
                                                 <li className='searchResultsList'>
                                                     {item.name}
                                                 </li>
-                                            </div>
-                                        </Link>
+                                            </Link>
+                                        </div>
                                     })}
                                 </ol>
                             </div>
@@ -148,11 +137,11 @@ export class Home extends Component {
                             <p className='filteredTitle'>
                                 Upcoming games.
                             </p>
+
                             <div className='trending'>
                                 {this.state.trending.map((item, i) => {
-                                    return <Link key={i} to={{pathname:`/game-detail/${item.id}`}}>
+                                    return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
                                         <div className='trending'>
-
                                             <div className='left'>
                                                 <img className='trendingImg' src={item.background_image} alt={item.background_image} />
                                             </div>
@@ -164,9 +153,9 @@ export class Home extends Component {
                                                     Release date: {item.released}
                                                 </p>
                                                 <p className='trendingGameTitle'>
-                                                    Consoles: {item.platforms.map((item)=>{
-                                                        return <li> 
-                                                        {item.platform.name}
+                                                    Consoles: {item.platforms.map((item) => {
+                                                        return <li >
+                                                            {item.platform.name}
                                                         </li>
                                                     })}
                                                 </p>
@@ -193,8 +182,8 @@ export class Home extends Component {
                         <div className='row1'>
 
                             {this.state.bestGenreGames.map((item, i) => {
-                                return <div className='rowResults'>
-                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                return <div key={i} className='rowResults'>
+                                    <Link to={{ pathname: `/game-detail/${item.id}` }}>
                                         <img className='img' src={item.background_image} alt={item.background_image} />
                                         <p className='searchResultsText'>{item.name}</p>
                                     </Link>
@@ -208,8 +197,8 @@ export class Home extends Component {
 
                         <div className='row1'>
                             {this.state.coronaGames.map((item, i) => {
-                                return <div className='rowResults'>
-                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                return <div key={i} className='rowResults'>
+                                    <Link to={{ pathname: `/game-detail/${item.id}` }}>
                                         <img className='img' src={item.background_image} alt={item.background_image} />
                                         <p className='searchResultsText'>{item.name}</p>
                                     </Link>

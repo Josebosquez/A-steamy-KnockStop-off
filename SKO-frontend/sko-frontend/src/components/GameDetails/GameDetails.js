@@ -156,7 +156,7 @@ export class GameDetails extends Component {
                         <div>
                             <p className='ptag'>Rating Information</p>
                             <div className='rating'>
-                                Esrb Rating: {this.state.esrb.name}
+                                Esrb Rating: {this.state.esrb?.name || ""}
                             </div>
                             <br/>
                             <div className='ratingSize' >
