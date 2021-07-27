@@ -1,13 +1,53 @@
 import React, { Component } from 'react'
+import { toast } from "react-toastify";
+import { isEmpty } from "validator";
+import jwtDecode from "jwt-decode";
+import checkIfAuth from '../../utils/checkIfAuth';
+import setAxiosAuthToken from "../../utils/setAxiosAuthToken";
 
 export class Login extends Component {
-    state={
+    state = {
         email: '',
         password: '',
         emailError: '',
         passwordError: '',
         canSubmit: true,
-    }
+    };
+
+    handleOnChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        },
+            () => {
+                if (event.target.name === "email") {
+                    if (isEmpty(this.state.email)) {
+                        this.setState({
+                            emailError: "Email cannot be empty",
+                            canSubmit: true,
+                        });
+                    } else {
+                        this.setState({
+                            emailError: ""
+                        })
+                    }
+                }
+
+                if (event.target.name === "password") {
+                    if (isEmpty(this.state.password)) {
+                        this.setState({
+                            passwordError: "Password cannot be empty",
+                            canSubmit: true,
+                        });
+                    } else {
+                        this.setState({
+                            passwordError: "",
+                        });
+                    }
+                }
+            })
+            console.log(event.target.value)
+    };
+
     render() {
         const {
             email,
