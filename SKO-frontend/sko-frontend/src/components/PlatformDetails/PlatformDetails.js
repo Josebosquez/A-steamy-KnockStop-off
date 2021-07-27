@@ -26,6 +26,8 @@ export class PlatformDetails extends Component {
                 return item.platform.id == this.props.match.params.platform
             })
 
+            let platformSearch = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
+
             let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&platforms=${this.props.match.params.platform}&ordering=-added&page=1&page_size=1`)
 
             let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${this.props.match.params.platform}&metacritic=90,100&page=1&page_size=10`)
@@ -38,6 +40,7 @@ export class PlatformDetails extends Component {
                 trending: trending.data.results,
                 bestGenreGames: genre.data.results,
                 coronaGames: genre1.data.results,
+                searchedPlatformArray: platformSearch.data.results
             }, () => {
                 console.log(this.state.trending)
                 console.log(result);
@@ -118,70 +121,92 @@ export class PlatformDetails extends Component {
         const { searchBarErr, platformName } = this.state
         return (
             <div>
-
                 <div className='platformMain'>
-                    <div className='platforminput-trending'>
+                    <div className="top">
+                        <div className='allPlatforms'>
+                            <p className='filteredTitle'>Platforms</p>
 
-                        <div className='platformName'>{platformName} Platform</div>
-
-                        <div className='platforminput'>
-                            <form className='platforminput'>
-                                <input
-                                    onChange={this.handleOnChange}
-                                    placeholder='Search bar'
-                                />
-                                <button onClick={this.handleOnEnter}>Enter</button>
-                            </form>
-
-                            <div className="platformerrorMessage">
-                                {searchBarErr && searchBarErr}
+                            <div className='searchedPlatformResults'>
+                                <ol>
+                                    {this.state.searchedPlatformArray.map((item, i) => {
+                                        return <div className='platformResults'>
+                                            <Link key={i} to={{ pathname: `/platform-search/${item.id}` }}>
+                                                <li className='searchResultsList'>
+                                                    {item.name}
+                                                </li>
+                                            </Link>
+                                        </div>
+                                    })}
+                                </ol>
                             </div>
                         </div>
+                        <div className='platforminput-trending'>
 
-                        <div className='platformsearchedGameResults'>
-                            {this.state.searchedGameArray.map((item, i) => {
-                                if (i < 20) {
-                                    return <Link key={i} to={{
-                                        pathname: `/game-detail/${item.id}`
-                                    }}>
-                                        <div className='searchResults'>
-                                            <img className='platformimg' src={item.background_image} alt={item.background_image} />
-                                            <p className='platformsearchResultsText'>{item.name}</p>
+                            <div className='platformName'>{platformName} Platform</div>
+
+                            <div className='platforminput'>
+                                <form className='platforminput'>
+                                    <input
+                                        onChange={this.handleOnChange}
+                                        placeholder='Search bar'
+                                    />
+                                    <button onClick={this.handleOnEnter}>Enter</button>
+                                </form>
+
+                                <div className="platformerrorMessage">
+                                    {searchBarErr && searchBarErr}
+                                </div>
+                            </div>
+
+                            <div className='platformsearchedGameResults'>
+                                {this.state.searchedGameArray.map((item, i) => {
+                                    if (i < 20) {
+                                        return <Link key={i} to={{
+                                            pathname: `/game-detail/${item.id}`
+                                        }}>
+                                            <div className='searchResults'>
+                                                <img className='platformimg' src={item.background_image} alt={item.background_image} />
+                                                <p className='platformsearchResultsText'>{item.name}</p>
+                                            </div>
+                                        </Link>
+                                    }
+                                })}
+                            </div>
+
+
+                            <p className='filteredTitle'>
+                                Upcoming games.
+                            </p>
+                            <div className='platformtrending'>
+                                {this.state.trending.map((item, i) => {
+                                    return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                        <div className='trending'>
+                                            <div className='left'>
+                                                <img className='trendingImg' src={item.background_image} alt={item.background_image} />
+                                            </div>
+                                            <div className='right'>
+                                                <p className='trendingGameTitle'>
+                                                    Name of game: {item.name}
+                                                </p>
+                                                <p className='trendingGameTitle'>
+                                                    Release date: {item.released}
+                                                </p>
+                                                <p className='trendingGameTitle'>
+                                                    Consoles: {item.platforms.map((item) => {
+                                                        return <li >
+                                                            {item.platform.name}
+                                                        </li>
+                                                    })}
+                                                </p>
+                                                {/* <p className='trendingGameTitle'>
+                                                Esrb rating: item.ratings
+                                            </p> */}
+                                            </div>
                                         </div>
                                     </Link>
-                                }
-                            })}
-                        </div>
+                                })}
 
-                        <p className='filteredTitle'>
-                            Upcoming games.
-                        </p>
-                        <div className='platformtrending'>
-                            {this.state.trending.map((item, i) => {
-                                return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
-                                    <div className='trending'>
-
-                                        <div className='left'>
-                                            <img className='trendingImg' src={item.background_image} alt={item.background_image} />
-                                        </div>
-                                        <div className='right'>
-                                            <p className='trendingGameTitle'>
-                                                Name of game: {item.name}
-                                            </p>
-                                            <p className='trendingGameTitle'>
-                                                Release date: {item.released}
-                                            </p>
-                                            <p className='trendingGameTitle'>
-                                                Consoles: platforms go here
-                                            </p>
-                                            <p className='trendingGameTitle'>
-                                                Esrb rating: item.ratings
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            })}
-
+                            </div>
                         </div>
                     </div>
 
@@ -189,8 +214,8 @@ export class PlatformDetails extends Component {
                         <p className='filteredTitle'>Best Rated Games of All Time!</p>
                         <div className='row1'>
                             {this.state.bestGenreGames.map((item, i) => {
-                                return <div className='rowResults'>
-                                    <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                return <div className='rowResults' key={i}>
+                                    <Link to={{ pathname: `/game-detail/${item.id}` }}>
                                         <img className='img' src={item.background_image} alt={item.background_image} />
                                         <p className='searchResultsText'>{item.name}</p>
                                     </Link>
@@ -198,15 +223,14 @@ export class PlatformDetails extends Component {
                             })}
                         </div>
                     </div>
-
                     <div className='row'>
                         <p className='filteredTitle'>Corona Virus Games!</p>
 
                         <div className='row1'>
                             {this.state.coronaGames.length > 0 ? (
                                 this.state.coronaGames.map((item, i) => {
-                                    return (<div className='rowResults'>
-                                        <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+                                    return (<div className='rowResults' key={i}>
+                                        <Link to={{ pathname: `/game-detail/${item.id}` }}>
                                             <img className='img' src={item.background_image} alt={item.background_image} />
                                             <p className='searchResultsText'>{item.name}</p>
                                         </Link>
